@@ -1,0 +1,88 @@
+#!/bin/bash
+set +o posix
+
+# Fail fast with concise message when cwd does not exist
+if ! [[ -d "$PWD" ]]; then
+  echo "Error: The current working directory doesn't exist, cannot proceed." >&2
+  exit 1
+fi
+
+quiet_cd() {
+  cd "$@" >/dev/null
+}
+
+symlink_target_directory() {
+  local target="$(readlink "$1")"
+  local target_dirname="$(dirname "$target")"
+  local directory="$2"
+  quiet_cd "$directory" && quiet_cd "$target_dirname" && pwd -P
+}
+
+BREW_FILE_DIRECTORY="$(quiet_cd "${0%/*}/" && pwd -P)"
+HOMEBREW_BREW_FILE="${BREW_FILE_DIRECTORY%/}/${0##*/}"
+HOMEBREW_PREFIX="${HOMEBREW_BREW_FILE%/*/*}"
+
+# Default to / prefix if unset or the bin/brew file.
+if [[ -z "$HOMEBREW_PREFIX" || "$HOMEBREW_PREFIX" = "$HOMEBREW_BREW_FILE" ]]
+then
+  HOMEBREW_PREFIX="/"
+fi
+
+HOMEBREW_REPOSITORY="$HOMEBREW_PREFIX"
+
+# Resolve the bin/brew symlink to find Homebrew's repository
+if [[ -L "$HOMEBREW_BREW_FILE" ]]
+then
+  BREW_FILE_DIRECTORY="$(symlink_target_directory "$HOMEBREW_BREW_FILE" "$BREW_FILE_DIRECTORY")"
+  HOMEBREW_REPOSITORY="${BREW_FILE_DIRECTORY%/*}"
+fi
+
+# Try to find a /usr/local HOMEBREW_PREFIX where possible (for bottles)
+if [[ -L "/usr/local/bin/brew" ]]
+then
+  USR_LOCAL_BREW_FILE_DIRECTORY="$(symlink_target_directory "/usr/local/bin/brew" "/usr/local/bin")"
+  USR_LOCAL_HOMEBREW_REPOSITORY="${USR_LOCAL_BREW_FILE_DIRECTORY%/*}"
+  if [[ "$HOMEBREW_REPOSITORY" = "$USR_LOCAL_HOMEBREW_REPOSITORY" ]]
+  then
+    HOMEBREW_PREFIX="/usr/local"
+  fi
+fi
+
+HOMEBREW_LIBRARY="$HOMEBREW_REPOSITORY/Library"
+
+# Whitelist and copy to HOMEBREW_* all variables previously mentioned in
+# manpage or used elsewhere by Homebrew.
+for VAR in AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY BINTRAY_USER BINTRAY_KEY \
+           BROWSER EDITOR GIT NO_COLOR PATH VISUAL \
+           GITHUB_USER GITHUB_PASSWORD GITHUB_TOKEN
+do
+  # Skip if variable value is empty.
+  [[ -z "${!VAR}" ]] && continue
+
+  VAR_NEW="HOMEBREW_${VAR}"
+  # Skip if existing HOMEBREW_* variable is set.
+  [[ -n "${!VAR_NEW}" ]] && continue
+  export "$VAR_NEW"="${!VAR}"
+done
+
+# test-bot does environment filtering itself
+if [[ -z "$HOMEBREW_NO_ENV_FILTERING" && "$1" != "test-bot" ]]
+then
+  PATH="/usr/bin:/bin:/usr/sbin:/sbin"
+
+  FILTERED_ENV=()
+  # Filter all but the specific variables.
+  for VAR in HOME SHELL PATH TERM COLUMNS LOGNAME USER CI TRAVIS SSH_AUTH_SOCK SUDO_ASKPASS \
+             http_proxy https_proxy ftp_proxy no_proxy all_proxy HTTPS_PROXY FTP_PROXY ALL_PROXY \
+             "${!HOMEBREW_@}" "${!TRAVIS_@}"
+  do
+    # Skip if variable value is empty.
+    [[ -z "${!VAR}" ]] && continue
+
+    FILTERED_ENV+=( "${VAR}=${!VAR}" )
+  done
+
+  exec /usr/bin/env -i "${FILTERED_ENV[@]}" /bin/bash "$HOMEBREW_LIBRARY/Homebrew/brew.sh" "$@"
+else
+  source "$HOMEBREW_LIBRARY/Homebrew/brew.sh"
+fi
