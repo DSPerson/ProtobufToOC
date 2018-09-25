@@ -16,6 +16,7 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Insert code here to initialize your application
+    
 }
 
 
@@ -23,5 +24,13 @@
     // Insert code here to tear down your application
 }
 
+- (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender {
+    return false;
+}
 
+- (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag {
+    [NSApp activateIgnoringOtherApps:true];
+    [_currentController.window makeKeyAndOrderFront:self];
+    return true;
+}
 @end

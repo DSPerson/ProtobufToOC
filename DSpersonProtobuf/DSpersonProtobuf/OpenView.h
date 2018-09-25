@@ -8,6 +8,13 @@
 
 #import <Cocoa/Cocoa.h>
 
+typedef void(^kDragFilePath)(NSString *file);
+typedef void(^kDragEnterAndExit)(BOOL enter);
+
 @interface OpenView : NSView
 
+@property (nonatomic, copy) kDragFilePath dragFile;
+@property (nonatomic, copy) kDragEnterAndExit dragEX;
+
 @end
+

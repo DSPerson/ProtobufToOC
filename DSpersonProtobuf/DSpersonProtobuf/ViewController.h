@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-
+@class OpenView;
 @interface ViewController : NSViewController
 {
     BOOL canSelect;
@@ -19,6 +19,8 @@
 @property (weak) IBOutlet NSButton *selectButton;
 
 @property (weak) IBOutlet NSButton *recheckButton;
+@property (weak) IBOutlet OpenView *openView;
+@property (weak) IBOutlet NSView *dragEnterMaskView;
 
 @end
 

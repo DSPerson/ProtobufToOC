@@ -8,11 +8,20 @@
 
 #import "ViewController.h"
 #import "STPrivilegedTask.h"
+#import "OpenView.h"
 @implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    __weak ViewController *wealSelf = self;
+    self.openView.dragFile = ^(NSString *file) {
+        [wealSelf createShell:file];
+    };
+    self.openView.dragEX = ^(BOOL enter) {
+        wealSelf.dragEnterMaskView.hidden = !enter;
+    };
+    self.dragEnterMaskView.wantsLayer = true;
+    self.dragEnterMaskView.layer.backgroundColor = [NSColor whiteColor].CGColor;
     // Do any additional setup after loading the view.
     [self check];
 }

@@ -684,7 +684,7 @@
         <!--Window Controller-->
         <scene sceneID="R2V-B0-nI4">
             <objects>
-                <windowController id="B8D-0N-5wS" sceneMemberID="viewController">
+                <windowController id="B8D-0N-5wS" customClass="DefaultWC" sceneMemberID="viewController">
                     <window key="window" title="Protobuf转换工具" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="IQv-IB-iLA">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
@@ -729,14 +729,14 @@
                                             <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eKr-Eu-1aB">
                                                 <rect key="frame" x="10" y="10" width="270" height="169"/>
                                                 <clipView key="contentView" id="DoO-66-xUB">
-                                                    <rect key="frame" x="1" y="1" width="268" height="167"/>
+                                                    <rect key="frame" x="1" y="1" width="253" height="167"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <textView editable="NO" selectable="NO" importsGraphics="NO" verticallyResizable="YES" usesFontPanel="YES" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" spellingCorrection="YES" smartInsertDelete="YES" id="7ub-QF-l1N">
-                                                            <rect key="frame" x="0.0" y="0.0" width="268" height="167"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="253" height="167"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                            <size key="minSize" width="268" height="167"/>
+                                                            <size key="minSize" width="253" height="167"/>
                                                             <size key="maxSize" width="463" height="10000000"/>
                                                             <color key="insertionPointColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                         </textView>
@@ -748,7 +748,7 @@
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </scroller>
                                                 <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="sF3-wh-Efo">
-                                                    <rect key="frame" x="253" y="1" width="16" height="167"/>
+                                                    <rect key="frame" x="254" y="1" width="15" height="167"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </scroller>
                                             </scrollView>
@@ -769,7 +769,7 @@
                                                 </textFieldCell>
                                             </textField>
                                             <button hidden="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9gi-f1-pMs">
-                                                <rect key="frame" x="99" y="213" width="94" height="32"/>
+                                                <rect key="frame" x="98" y="213" width="94" height="32"/>
                                                 <buttonCell key="cell" type="push" title="重新验证" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="1XQ-rM-FCc">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -778,21 +778,52 @@
                                                     <action selector="recheckAction:" target="XfG-lQ-9wD" id="PcU-Ze-Rfm"/>
                                                 </connections>
                                             </button>
+                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SKa-A1-pap">
+                                                <rect key="frame" x="97" y="309" width="97" height="17"/>
+                                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="1. 或者拖入文件" id="2a1-8i-pWx">
+                                                    <font key="font" metaFont="system"/>
+                                                    <color key="textColor" name="systemRedColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                            <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tHZ-pl-0O1">
+                                                <rect key="frame" x="2" y="2" width="286" height="396"/>
+                                                <subviews>
+                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="E6Q-nY-019">
+                                                        <rect key="frame" x="101" y="190" width="84" height="17"/>
+                                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="释放鼠标转换" id="8uS-jO-gt2">
+                                                            <font key="font" metaFont="system"/>
+                                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                        </textFieldCell>
+                                                    </textField>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstItem="E6Q-nY-019" firstAttribute="centerY" secondItem="tHZ-pl-0O1" secondAttribute="centerY" id="MZZ-RE-KBR"/>
+                                                    <constraint firstItem="E6Q-nY-019" firstAttribute="centerX" secondItem="tHZ-pl-0O1" secondAttribute="centerX" id="eui-z2-ilx"/>
+                                                </constraints>
+                                            </customView>
                                         </subviews>
                                         <constraints>
+                                            <constraint firstItem="tHZ-pl-0O1" firstAttribute="leading" secondItem="QQk-ys-agk" secondAttribute="leading" constant="2" id="7rx-dF-LTk"/>
                                             <constraint firstItem="KQL-9V-Iaj" firstAttribute="centerX" secondItem="QQk-ys-agk" secondAttribute="centerX" id="Fpl-09-Xad"/>
                                             <constraint firstItem="jml-Gr-WCE" firstAttribute="centerX" secondItem="QQk-ys-agk" secondAttribute="centerX" id="LIT-15-0b4"/>
                                             <constraint firstItem="eKr-Eu-1aB" firstAttribute="top" secondItem="KQL-9V-Iaj" secondAttribute="bottom" constant="10" id="LTw-o1-HYX"/>
+                                            <constraint firstItem="SKa-A1-pap" firstAttribute="top" secondItem="FGO-BW-l1d" secondAttribute="bottom" constant="10" id="Mfs-IP-wno"/>
                                             <constraint firstItem="jml-Gr-WCE" firstAttribute="top" secondItem="QQk-ys-agk" secondAttribute="top" constant="20" id="OTC-o7-mgV"/>
                                             <constraint firstAttribute="bottom" secondItem="eKr-Eu-1aB" secondAttribute="bottom" constant="10" id="Qi4-7w-YLP"/>
+                                            <constraint firstItem="tHZ-pl-0O1" firstAttribute="top" secondItem="QQk-ys-agk" secondAttribute="top" constant="2" id="R0R-Ix-Mh6"/>
                                             <constraint firstAttribute="width" constant="290" id="Tg5-VV-25r"/>
                                             <constraint firstItem="9gi-f1-pMs" firstAttribute="centerY" secondItem="QQk-ys-agk" secondAttribute="centerY" constant="-30" id="VpG-wN-CkH"/>
                                             <constraint firstItem="KQL-9V-Iaj" firstAttribute="centerY" secondItem="QQk-ys-agk" secondAttribute="centerY" id="XlV-FJ-luz"/>
                                             <constraint firstAttribute="trailing" secondItem="eKr-Eu-1aB" secondAttribute="trailing" constant="10" id="Z1N-eB-a47"/>
                                             <constraint firstItem="eKr-Eu-1aB" firstAttribute="leading" secondItem="QQk-ys-agk" secondAttribute="leading" constant="10" id="Ztv-U6-ZZT"/>
+                                            <constraint firstAttribute="trailing" secondItem="tHZ-pl-0O1" secondAttribute="trailing" constant="2" id="acY-DR-O1q"/>
                                             <constraint firstItem="FGO-BW-l1d" firstAttribute="top" secondItem="jml-Gr-WCE" secondAttribute="bottom" constant="10" id="ftQ-8e-n0w"/>
+                                            <constraint firstAttribute="bottom" secondItem="tHZ-pl-0O1" secondAttribute="bottom" constant="2" id="hFn-5p-QeF"/>
                                             <constraint firstItem="9gi-f1-pMs" firstAttribute="centerX" secondItem="QQk-ys-agk" secondAttribute="centerX" id="rJ0-QL-59y"/>
                                             <constraint firstItem="FGO-BW-l1d" firstAttribute="centerX" secondItem="QQk-ys-agk" secondAttribute="centerX" id="tl1-hP-U52"/>
+                                            <constraint firstItem="SKa-A1-pap" firstAttribute="centerX" secondItem="QQk-ys-agk" secondAttribute="centerX" id="tl4-sU-J8L"/>
                                         </constraints>
                                     </customView>
                                 </subviews>
@@ -813,6 +844,8 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="dragEnterMaskView" destination="tHZ-pl-0O1" id="Mgz-0L-ADv"/>
+                        <outlet property="openView" destination="QQk-ys-agk" id="rJw-1Y-tKz"/>
                         <outlet property="recheckButton" destination="9gi-f1-pMs" id="LJl-Z6-MeQ"/>
                         <outlet property="scollrView" destination="eKr-Eu-1aB" id="OHy-bU-vbI"/>
                         <outlet property="selectButton" destination="KQL-9V-Iaj" id="ruW-5r-eUh"/>
