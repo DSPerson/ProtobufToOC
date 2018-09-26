@@ -75,6 +75,9 @@
                     self->checkOnce = false;
                     self.recheckButton.enabled = true;
                 }
+            } else {
+//                [self.view.window orderFront:self];
+                [NSApp activateIgnoringOtherApps:true];
             }
             self.recheckButton.enabled = true;
             self.recheckButton.hidden = true;
@@ -247,12 +250,16 @@
     }
     NSMutableArray *names = [NSMutableArray arrayWithCapacity:arr.count];
     [arr enumerateObjectsUsingBlock:^(NSString *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        
         if ([obj hasSuffix:@"proto"] && [[NSFileManager defaultManager] fileExistsAtPath:[filePath stringByAppendingPathComponent:obj]  isDirectory:false]) {
             [names addObject:obj];
         }
     }];
     if (names.count == 0) {
+        NSAlert *alert = [[NSAlert alloc] init];
+        alert.messageText = @"未找到Protobuf文件";
+        [alert beginSheetModalForWindow:self.view.window completionHandler:^(NSModalResponse returnCode) {
+            
+        }];
         return;
     }
     [names enumerateObjectsUsingBlock:^(NSString *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
