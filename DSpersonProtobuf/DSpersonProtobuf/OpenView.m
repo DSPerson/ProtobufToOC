@@ -8,7 +8,7 @@
 
 #import "OpenView.h"
 #import <QuartzCore/QuartzCore.h>
-
+#import "DSConst.m"
 @interface OpenView ()
 {
     BOOL _currentDraging;
@@ -149,6 +149,14 @@
         NSArray *rs = [pb propertyListForType:NSFilenamesPboardType];
         NSString *first = [rs firstObject];
         if (first) {
+            NSMutableArray *arr = [[[NSUserDefaults standardUserDefaults] objectForKey:kRecentList] mutableCopy];
+            if (![arr containsObject:first]) {
+                arr = [NSMutableArray array];
+                [arr addObject:first];
+                [[NSUserDefaults standardUserDefaults] setObject:arr forKey:kRecentList];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+            }
+            [[NSNotificationCenter defaultCenter] postNotificationName:kRecentListNotificationName object:nil];
             [self exit];
             !self.dragFile ?: self.dragFile(first);
         }

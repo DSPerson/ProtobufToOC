@@ -13,6 +13,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    _selectIndex = @"objc";
     __weak ViewController *wealSelf = self;
     self.openView.dragFile = ^(NSString *file) {
         [wealSelf createShell:file];
@@ -47,6 +48,11 @@
     // 获取运行结果
     NSData *data = [file readDataToEndOfFile];
     return [[NSString alloc] initWithData: data encoding: NSUTF8StringEncoding];
+}
+- (IBAction)changgePopButton:(NSPopUpButton *)sender {
+    
+    NSArray *current = @[@"objc", @"java", @"go"];
+    _selectIndex = current[sender.indexOfSelectedItem];
 }
 - (void)check {
     BOOL check_protoc = [[[NSUserDefaults standardUserDefaults] objectForKey:@"check_protoc"] boolValue];
@@ -240,7 +246,7 @@
     }
     [string appendFormat:@"#!/bin/bash"];
     [string appendFormat:@"\n"];
-    [string appendFormat:@"%@ --proto_path=%@ --objc_out=%@",@"/usr/local/bin/protoc", filePath, needDirectory];
+    [string appendFormat:@"%@ --proto_path=%@ --%@_out=%@",@"/usr/local/bin/protoc", filePath, _selectIndex, needDirectory];
     //     [string appendFormat:@" --version"];
     
     //获取文件夹里面内容
@@ -297,11 +303,31 @@
         [privilegedTask setLaunchPath:@"/bin/bash"];
         [privilegedTask setArguments:@[@"-c", @"cd ~/Desktop; open Proto_OBJC"]];
         [privilegedTask launch];
+        
     } else {
         rs = @"失败";
     }
     self.textView.string = rs;
-    
+    NSString *cc = @"objc_objc";
+    NSUserDefaults *defalut = [NSUserDefaults standardUserDefaults];
+    if (![defalut boolForKey:cc] && [_selectIndex isEqualToString: @"objc"]) {
+        NSAlert *alert = [[NSAlert alloc] init];
+        alert.messageText = @"OC 是 MRC文件, 如果工程为ARC工程, 则需要在 'Build Phases -> Compile Sources' 添加 '-fno-objc-arc'";
+        alert.alertStyle = NSAlertStyleWarning;
+        
+        
+        [alert addButtonWithTitle:@"确定"];
+        [alert addButtonWithTitle:@"不再提示"];
+        
+        [alert beginSheetModalForWindow:self.view.window completionHandler:^(NSModalResponse returnCode) {
+            if (returnCode == 1000) {
+                
+            } else if (returnCode == 1001) {
+                [defalut setBool:true forKey:cc];
+                [defalut synchronize];
+            }
+        }];
+    }
 }
 
 

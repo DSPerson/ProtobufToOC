@@ -10,8 +10,10 @@
 @class OpenView;
 @interface ViewController : NSViewController
 {
+    @private
     BOOL canSelect;
     BOOL checkOnce;
+    NSString *_selectIndex;
 }
 @property (unsafe_unretained) IBOutlet NSTextView *textView;
 @property (weak) IBOutlet NSScrollView *scollrView;

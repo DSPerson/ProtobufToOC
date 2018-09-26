@@ -10,6 +10,7 @@
 		210329C9214B920600280DF8 /* cc.sh in Resources */ = {isa = PBXBuildFile; fileRef = 210329C8214B920600280DF8 /* cc.sh */; };
 		210329D3214BAAE000280DF8 /* brewc.sh in Resources */ = {isa = PBXBuildFile; fileRef = 210329D2214BAAE000280DF8 /* brewc.sh */; };
 		21A842D2215A4FE400C6E2C2 /* DefaultWC.m in Sources */ = {isa = PBXBuildFile; fileRef = 21A842D1215A4FE400C6E2C2 /* DefaultWC.m */; };
+		21A842DA215B571F00C6E2C2 /* DSConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 21A842D9215B571F00C6E2C2 /* DSConst.m */; };
 		CF292F6C21466B1B00CD1C78 /* OpenView.m in Sources */ = {isa = PBXBuildFile; fileRef = CF292F6B21466B1B00CD1C78 /* OpenView.m */; };
 		CF292F6F2146786700CD1C78 /* script.sh in Resources */ = {isa = PBXBuildFile; fileRef = CF292F6E2146786700CD1C78 /* script.sh */; };
 		CF3B07C321464B8600A2BA3C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CF3B07C221464B8600A2BA3C /* AppDelegate.m */; };
@@ -25,6 +26,7 @@
 		210329D2214BAAE000280DF8 /* brewc.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = brewc.sh; sourceTree = "<group>"; };
 		21A842D0215A4FE400C6E2C2 /* DefaultWC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DefaultWC.h; sourceTree = "<group>"; };
 		21A842D1215A4FE400C6E2C2 /* DefaultWC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DefaultWC.m; sourceTree = "<group>"; };
+		21A842D9215B571F00C6E2C2 /* DSConst.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DSConst.m; sourceTree = "<group>"; };
 		CF292F6A21466B1B00CD1C78 /* OpenView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OpenView.h; sourceTree = "<group>"; };
 		CF292F6B21466B1B00CD1C78 /* OpenView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OpenView.m; sourceTree = "<group>"; };
 		CF292F6E2146786700CD1C78 /* script.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = script.sh; sourceTree = "<group>"; };
@@ -84,6 +86,7 @@
 				CF292F6B21466B1B00CD1C78 /* OpenView.m */,
 				21A842D0215A4FE400C6E2C2 /* DefaultWC.h */,
 				21A842D1215A4FE400C6E2C2 /* DefaultWC.m */,
+				21A842D9215B571F00C6E2C2 /* DSConst.m */,
 				CF3B07C721464B8800A2BA3C /* Assets.xcassets */,
 				CF3B07C921464B8800A2BA3C /* Main.storyboard */,
 				CF3B07CC21464B8800A2BA3C /* Info.plist */,
@@ -177,6 +180,7 @@
 				CF3B07D721464D4800A2BA3C /* STPrivilegedTask.m in Sources */,
 				CF3B07C321464B8600A2BA3C /* AppDelegate.m in Sources */,
 				CF292F6C21466B1B00CD1C78 /* OpenView.m in Sources */,
+				21A842DA215B571F00C6E2C2 /* DSConst.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
