@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "STPrivilegedTask.h"
 #import "OpenView.h"
+#import "DSConst.m"
 @implementation ViewController
 
 - (void)viewDidLoad {
@@ -51,7 +52,7 @@
 }
 - (IBAction)changgePopButton:(NSPopUpButton *)sender {
     
-    NSArray *current = @[@"objc", @"java", @"go"];
+    NSArray *current = @[@"objc", @"java", @"cpp"];
     _selectIndex = current[sender.indexOfSelectedItem];
 }
 - (void)check {
@@ -216,15 +217,23 @@
     if (!canSelect) {
         return;
     }
-    //    [[NSWorkspace sharedWorkspace] selectFile:nil inFileViewerRootedAtPath:@"~/Documents"];
+    [self openWorkSpaceForce:false];
+}
+
+- (void)openWorkSpaceForce:(BOOL)force {
     NSOpenPanel *open = [NSOpenPanel openPanel];
-    
-    [open  setDirectoryURL:[NSURL URLWithString:[NSHomeDirectory() stringByAppendingPathComponent:@"Desktop"]]];
+    NSArray *lists = [[NSUserDefaults standardUserDefaults] objectForKey:kRecentList];
+    NSString *l = [NSHomeDirectory() stringByAppendingPathComponent:@"Desktop"];
+    if (lists.count != 0 && !force) {
+        l = lists.firstObject;
+    }
+//    l = @"/Users/shuaidu/BAT_文档/protobuf";
+    [open setDirectoryURL:[NSURL URLWithString:l]];
     open.allowsMultipleSelection = false;
     open.canChooseFiles = false;
     open.canChooseDirectories = true;
+    open.allowedFileTypes = @[@"doc"];
     NSModalResponse rs = [open runModal];
-    NSLog(@"%ld", (long)rs);
     if (rs == 1) {
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self createShell:open.URLs.firstObject.path];

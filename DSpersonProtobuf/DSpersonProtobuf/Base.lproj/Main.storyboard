@@ -793,7 +793,7 @@
                                                         <items>
                                                             <menuItem title="OC" state="on" keyEquivalent="1" id="Nnh-GL-EvQ"/>
                                                             <menuItem title="JAVA" keyEquivalent="2" id="qmS-9G-PZF"/>
-                                                            <menuItem title="Go" keyEquivalent="3" id="cdy-b2-j8N"/>
+                                                            <menuItem title="C++" keyEquivalent="3" id="cdy-b2-j8N"/>
                                                         </items>
                                                     </menu>
                                                 </popUpButtonCell>

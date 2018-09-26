@@ -10,7 +10,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DSpersonProtobuf/OpenView.m"
-            timestampString = "559636769.519122"
+            timestampString = "559637633.490134"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "115"
@@ -25,13 +25,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "DSpersonProtobuf/AppDelegate.m"
-            timestampString = "559636769.5191849"
+            filePath = "DSpersonProtobuf/ViewController.m"
+            timestampString = "559638147.1403559"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "63"
-            endingLineNumber = "63"
-            landmarkName = "-callRecentMenuSub:"
+            startingLineNumber = "237"
+            endingLineNumber = "237"
+            landmarkName = "-openWorkSpaceForce:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
