@@ -66,6 +66,7 @@
     if (check_protoc) {
         
     } else {
+        
         NSMutableString *desc = [@"第一步:\n检查是否安装Protobuf;\n" mutableCopy];
         self.textView.string = desc;
         
@@ -155,7 +156,7 @@
                 }else {
                     self->canSelect = true;
                     self.selectButton.enabled = true;
-                    self.textView.string = @"已安装Protobuf\n 请选择文件夹";
+                    self.textView.string = @"已安装Protobuf\n请选择文件夹或者拖动含有Protobuf的文件夹到App白色区域中";
                 }
                 
             });
