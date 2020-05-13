@@ -6,5 +6,12 @@
 #else
 #    echo "0"
 #fi
-cd /usr/local/Cellar/protobuf/
-echo $?
+#cd /usr/local/Cellar/protobuf/
+#echo $?
+
+if [ -d "/usr/local/Cellar/protobuf/" ]
+then
+echo 1
+else
+echo 0
+fi

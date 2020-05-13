@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "DSConst.m"
+#import "UserDefault.h"
 @interface AppDelegate ()
 
 @property (weak) IBOutlet NSMenu *openRecentMenu;
@@ -16,12 +17,28 @@
 @implementation AppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+    NSURL *url = [UserDefault getselectPath];
+    if (url) {
+        NSAlert *aler = [[NSAlert alloc] init];
+        aler.messageText = url.path;
+        [aler beginSheetModalForWindow:self.currentController.window completionHandler:^(NSModalResponse returnCode) {
+            
+        }];
+    } else {
+//        NSAlert *aler = [[NSAlert alloc] init];
+//        aler.messageText = @"煤头纸";
+//        [aler beginSheetModalForWindow:self.currentController.window completionHandler:^(NSModalResponse returnCode) {
+//            
+//        }];
+    }
     // Insert code here to initialize your application
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateOpenRecent) name:kRecentListNotificationName object:nil];
     [self openRecent:nil];
     
 }
-
+- (void)application:(NSApplication *)application openURLs:(NSArray<NSURL *> *)urls {
+    
+}
 - (IBAction)about:(NSMenuItem *)sender {
     
 }
@@ -67,4 +84,6 @@
     [_currentController.window makeKeyAndOrderFront:self];
     return true;
 }
+
+
 @end

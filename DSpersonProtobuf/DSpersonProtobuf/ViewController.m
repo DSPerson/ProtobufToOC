@@ -10,8 +10,14 @@
 #import "STPrivilegedTask.h"
 #import "OpenView.h"
 #import "DSConst.m"
-@implementation ViewController
+#import "UserDefault.h"
 
+@interface ViewController ()
+
+@property (nonatomic, strong) STPrivilegedTask *taskS;
+@end
+
+@implementation ViewController
 - (void)viewDidLoad {
     [super viewDidLoad];
     _selectIndex = @"objc";
@@ -63,97 +69,158 @@
         NSMutableString *desc = [@"第一步:\n检查是否安装Protobuf;\n" mutableCopy];
         self.textView.string = desc;
         
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            STPrivilegedTask *privilegedTask = [[STPrivilegedTask alloc] init];
-            [privilegedTask setLaunchPath:@"/bin/bash"];
-            [privilegedTask setArguments:@[@"cc.sh"]];
-            [privilegedTask setCurrentDirectoryPath:[[NSBundle mainBundle] resourcePath]];
-            OSStatus err = [privilegedTask launch];
-            if (err != errAuthorizationSuccess) {
-                if (err == errAuthorizationCanceled) {
-                    NSLog(@"User cancelled");
-                    self->checkOnce = false;
-                    self.recheckButton.hidden = false;
-                    self.recheckButton.enabled = true;
-                    return;
-                }  else {
-                    NSLog(@"Something went wrong: %d", (int)err);
-                    // For error codes, see http://www.opensource.apple.com/source/libsecurity_authorization/libsecurity_authorization-36329/lib/Authorization.h
-                    self->checkOnce = false;
-                    self.recheckButton.enabled = true;
-                }
-            } else {
-//                [self.view.window orderFront:self];
-                [NSApp activateIgnoringOtherApps:true];
-            }
-            self.recheckButton.enabled = true;
-            self.recheckButton.hidden = true;
-            [privilegedTask waitUntilExit];
-            NSFileHandle *handle = [privilegedTask outputFileHandle];
-            NSData *outData = [handle readDataToEndOfFile];
-            NSString * rs = [[NSString alloc] initWithData:outData encoding:NSUTF8StringEncoding];
-            if ([rs integerValue] == 1) {
-                NSAlert *alert = [[NSAlert alloc] init];
-                alert.messageText = @"检测到未安装 Protobuf";
-                alert.informativeText = @"是否自动安装?";
-                
-                [alert addButtonWithTitle:@"确认"];
-                [alert addButtonWithTitle:@"取消"];
-                
-                
-                NSButton *cancel = [[NSButton alloc] init];
-                cancel.title = @"取消";
-                
-                [alert beginSheetModalForWindow:self.view.window completionHandler:^(NSModalResponse returnCode) {
-                    if (returnCode == 1000) {
-                        
-                        NSString *cc = [NSString stringWithFormat:@"/usr/local/bin/brew install protobuf"];
-                        STPrivilegedTask *privilegedTask = [[STPrivilegedTask alloc] init];
-                        [privilegedTask setLaunchPath:@"/bin/bash"];///bin/bash
-                        [privilegedTask setArguments:@[@"-c", cc]];
-                        [privilegedTask setCurrentDirectoryPath:[[NSBundle mainBundle] resourcePath]];
-                        OSStatus err = [privilegedTask launch];
-                        if (err != errAuthorizationSuccess) {
-                            if (err == errAuthorizationCanceled) {
-                                NSLog(@"User cancelled");
-                                return;
-                            }  else {
-                                NSLog(@"Something went wrong: %d", (int)err);
-                                // For error codes, see http://www.opensource.apple.com/source/libsecurity_authorization/libsecurity_authorization-36329/lib/Authorization.h
-                            }
-                        }
-                        [privilegedTask waitUntilExit];
-                        NSFileHandle *handle = [privilegedTask outputFileHandle];
-                        NSData *outData = [handle readDataToEndOfFile];
-                        NSString * rs = [[NSString alloc] initWithData:outData encoding:NSUTF8StringEncoding];
-                        if ([rs isEqualToString:@"Updating Homebrew..."]) {
-                            self.textView.string = @"此处非常慢 最好使用 VPN";
-                        } else {
-                            self.textView.string = rs;
-                            //                            [self.textView scrollPoint:CGPointMake(0, CGRectGetMaxX(self.textView.frame))];
-                            [self.textView scrollToEndOfDocument:nil];
-                            self.selectButton.enabled = true;
-                            self->canSelect = true;
-                        }
-                        
-                        //                        NSURL *url = [NSURL fileURLWithPath:[[NSWorkspace sharedWorkspace] fullPathForApplication:@"Terminal"]];
-                        //                        NSError *error = nil;
-                        //                        [[NSWorkspace sharedWorkspace] launchApplicationAtURL:url options:NSWorkspaceLaunchAndPrint configuration:@{NSWorkspaceLaunchConfigurationArguments : @[@"Terminal://brew install protobuf;", @"exit;"]} error:&error];
-                        //                        NSLog(@"%@", error);
-                    } else if(returnCode == 1001) {
-                        
-                    }
-                }];
-                
-            }else {
-                self->canSelect = true;
-                self.selectButton.enabled = true;
-                self.textView.string = @"已安装Protobuf\n 请选择文件夹";
-            }
+        __block NSString *protobufVaild = @"0";
+        
+        dispatch_group_t group = dispatch_group_create();
+        dispatch_queue_t queue = dispatch_queue_create("com.dsperson.protobuf", DISPATCH_QUEUE_CONCURRENT);
+        
+        dispatch_group_async(group, queue, ^{
+            NSTask *task = [[NSTask alloc] init];
+            task.launchPath = @"/bin/bash";
+            task.arguments = @[@"cc.sh"];
+            task.currentDirectoryPath = [[NSBundle mainBundle] resourcePath];
+            
+            NSPipe *outputPipe = [NSPipe pipe];
+            [task setStandardOutput:outputPipe];
+            [task setStandardError:outputPipe];
+            NSFileHandle *readHandle = [outputPipe fileHandleForReading];
+            
+            [task launch];
+            [task waitUntilExit];
+            
+            NSData *outputData = [readHandle readDataToEndOfFile];
+            protobufVaild = [[NSString alloc] initWithData:outputData encoding:NSUTF8StringEncoding];
+            NSLog(@"protbuf 安装状态%@", protobufVaild);
         });
+        
+        dispatch_group_notify(group, queue, ^{
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if ([protobufVaild integerValue] == 0) {
+                    NSAlert *alert = [[NSAlert alloc] init];
+                    alert.messageText = @"检测到未安装 Protobuf";
+                    alert.informativeText = @"是否自动安装?";
+                    
+                    [alert addButtonWithTitle:@"确认"];
+                    [alert addButtonWithTitle:@"取消"];
+                    
+                    
+                    NSButton *cancel = [[NSButton alloc] init];
+                    cancel.title = @"取消";
+                    __weak ViewController *weakSelf = self;
+                    [alert beginSheetModalForWindow:self.view.window completionHandler:^(NSModalResponse returnCode) {
+                        __strong ViewController *strongSelf = weakSelf;
+                        if (returnCode == 1000) {
+                            [strongSelf install:@"installProtobuf.sh"];
+                            
+                            return;
+                            NSString *cc = [NSString stringWithFormat:@"/usr/local/bin/brew install protobuf"];
+                            STPrivilegedTask *privilegedTask = [[STPrivilegedTask alloc] init];
+                            [privilegedTask setLaunchPath:@"/bin/bash"];///bin/bash
+                            [privilegedTask setArguments:@[@"-c", cc]];
+                            [privilegedTask setCurrentDirectoryPath:[[NSBundle mainBundle] resourcePath]];
+                            OSStatus err = [privilegedTask launch];
+                            if (err != errAuthorizationSuccess) {
+                                if (err == errAuthorizationCanceled) {
+                                    NSLog(@"User cancelled");
+                                    return;
+                                }  else {
+                                    NSLog(@"Something went wrong: %d", (int)err);
+                                }
+                            }
+                            [privilegedTask waitUntilExit];
+                            NSFileHandle *handle = [privilegedTask outputFileHandle];
+                            NSData *outData = [handle readDataToEndOfFile];
+                            NSString * rs = [[NSString alloc] initWithData:outData encoding:NSUTF8StringEncoding];
+                            
+                            if ([rs isEqualToString:@"Updating Homebrew..."]) {
+                                self.textView.string = @"此处非常慢 最好使用 VPN";
+                            } else {
+                                self.textView.string = rs;
+                                //                            [self.textView scrollPoint:CGPointMake(0, CGRectGetMaxX(self.textView.frame))];
+                                [self.textView scrollToEndOfDocument:nil];
+                                self.selectButton.enabled = true;
+                                self->canSelect = true;
+                            }
+                        } else if(returnCode == 1001) {
+                            
+                        }
+                    }];
+                    
+                }else {
+                    self->canSelect = true;
+                    self.selectButton.enabled = true;
+                    self.textView.string = @"已安装Protobuf\n 请选择文件夹";
+                }
+                
+            });
+        });
+        
+        
+        
+        //            NSLog(@"%d", [outputString intValue]);
+        //            return;
+        //            STPrivilegedTask *privilegedTask = [[STPrivilegedTask alloc] init];
+        //            [privilegedTask setLaunchPath:@"/bin/bash"];
+        //            [privilegedTask setArguments:@[@"cc.sh"]];
+        //            [privilegedTask setCurrentDirectoryPath:[[NSBundle mainBundle] resourcePath]];
+        //            OSStatus err = [privilegedTask launch];
+        //            if (err != errAuthorizationSuccess) {
+        //                if (err == errAuthorizationCanceled) {
+        //                    NSLog(@"User cancelled");
+        //                    self->checkOnce = false;
+        //                    self.recheckButton.hidden = false;
+        //                    self.recheckButton.enabled = true;
+        //                    return;
+        //                }  else {
+        //                    NSLog(@"Something went wrong: %d", (int)err);
+        //                    self->checkOnce = false;
+        //                    self.recheckButton.enabled = true;
+        //                }
+        //            } else {
+        //                //                [self.view.window orderFront:self];
+        //                [NSApp activateIgnoringOtherApps:true];
+        //            }
+        //            self.recheckButton.enabled = true;
+        //            self.recheckButton.hidden = true;
+        //            NSLog(@"--->开始执行检查1");
+        //            [privilegedTask waitUntilExit];
+        //            NSLog(@"--->开始执行检查2");
+        //            NSFileHandle *handle = [privilegedTask outputFileHandle];
+        //            NSLog(@"--->开始执行检查3");
+        //            NSData *outData = [handle readDataToEndOfFile];
+        //            NSString * rs = [[NSString alloc] initWithData:outData encoding:NSUTF8StringEncoding];
+        
         
         return;
     }
+}
+
+- (void)install:(NSString *)agruments {
+    dispatch_group_t group = dispatch_group_create();
+    dispatch_queue_t queue = dispatch_queue_create("com.dsperson.install", DISPATCH_QUEUE_CONCURRENT);
+    __block NSString *rs = @"";
+    dispatch_group_async(group, queue, ^{
+        NSTask *task = [[NSTask alloc] init];
+        task.launchPath = @"/bin/bash";
+        task.arguments = @[agruments];
+        task.currentDirectoryPath = [[NSBundle mainBundle] resourcePath];
+        
+        NSPipe *outputPipe = [NSPipe pipe];
+        [task setStandardOutput:outputPipe];
+        [task setStandardError:outputPipe];
+        NSFileHandle *readHandle = [outputPipe fileHandleForReading];
+        
+        [task launch];
+        [task waitUntilExit];
+        
+        NSData *outputData = [readHandle readDataToEndOfFile];
+        rs = [[NSString alloc] initWithData:outputData encoding:NSUTF8StringEncoding];
+        NSLog(@"%@", rs);
+    });
+    dispatch_group_notify(group, queue, ^{
+        NSLog(@"%@", rs);
+    });
+    
 }
 - (IBAction)recheckAction:(id)sender {
     self.recheckButton.enabled = false;
@@ -165,7 +232,7 @@
     STPrivilegedTask *privilegedTask = [[STPrivilegedTask alloc] init];
     [privilegedTask setLaunchPath:@"/bin/bash"];
     [privilegedTask setArguments:@[
-                                   @"brewc.sh"]];
+        @"brewc.sh"]];
     [privilegedTask setCurrentDirectoryPath:[[NSBundle mainBundle] resourcePath]];
     OSStatus err = [privilegedTask launch];
     if (err != errAuthorizationSuccess) {
@@ -186,7 +253,7 @@
         STPrivilegedTask *privilegedTask = [[STPrivilegedTask alloc] init];
         [privilegedTask setLaunchPath:@"/bin/bash"];
         [privilegedTask setArguments:@[
-                                       @"-c", @"/usr/bin/ruby -e '$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)'"]];
+            @"-c", @"/usr/bin/ruby -e '$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)'"]];
         [privilegedTask setCurrentDirectoryPath:[[NSBundle mainBundle] resourcePath]];
         OSStatus err = [privilegedTask launch];
         if (err != errAuthorizationSuccess) {
@@ -227,7 +294,7 @@
     if (lists.count != 0 && !force) {
         l = lists.firstObject;
     }
-//    l = @"/Users/shuaidu/BAT_文档/protobuf";
+    //    l = @"/Users/shuaidu/BAT_文档/protobuf";
     [open setDirectoryURL:[NSURL URLWithString:l]];
     open.allowsMultipleSelection = false;
     open.canChooseFiles = false;
@@ -243,7 +310,7 @@
 
 
 - (void)createShell:(NSString *)filePath {
-
+    
     NSMutableString *string = [NSMutableString string];
     ///在界面上创建一个新的文件夹
     NSError *error;
@@ -282,8 +349,8 @@
     }];
     [string appendFormat:@"\n"];
     [string appendFormat:@"exit 0"];
-//    NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];
-//    [fileHandle writeData:data];
+    //    NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];
+    //    [fileHandle writeData:data];
     
     STPrivilegedTask *privilegedTask = [[STPrivilegedTask alloc] init];
     [privilegedTask setLaunchPath:@"/bin/bash"];
@@ -300,9 +367,11 @@
             // For error codes, see http://www.opensource.apple.com/source/libsecurity_authorization/libsecurity_authorization-36329/lib/Authorization.h
         }
     }
+    NSLog(@"--->开始执行检查4");
     [privilegedTask waitUntilExit];
-    
+    NSLog(@"--->开始执行检查5");
     NSFileHandle *handle = [privilegedTask outputFileHandle];
+    NSLog(@"--->开始执行检查6");
     NSData *outData = [handle readDataToEndOfFile];
     NSString * rs = [[NSString alloc] initWithData:outData encoding:NSUTF8StringEncoding];
     if (rs.length == 0) {

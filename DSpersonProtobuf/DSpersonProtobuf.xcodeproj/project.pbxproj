@@ -9,6 +9,12 @@
 /* Begin PBXBuildFile section */
 		210329C9214B920600280DF8 /* cc.sh in Resources */ = {isa = PBXBuildFile; fileRef = 210329C8214B920600280DF8 /* cc.sh */; };
 		210329D3214BAAE000280DF8 /* brewc.sh in Resources */ = {isa = PBXBuildFile; fileRef = 210329D2214BAAE000280DF8 /* brewc.sh */; };
+		2113F71E2361776D003C7DF7 /* FinderSync.m in Sources */ = {isa = PBXBuildFile; fileRef = 2113F71D2361776D003C7DF7 /* FinderSync.m */; };
+		2113F7232361776D003C7DF7 /* FinderSync.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 2113F71A2361776D003C7DF7 /* FinderSync.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		2113F72923617A74003C7DF7 /* capti.png in Resources */ = {isa = PBXBuildFile; fileRef = 2113F72823617A74003C7DF7 /* capti.png */; };
+		2113F72D23619D56003C7DF7 /* UserDefault.m in Sources */ = {isa = PBXBuildFile; fileRef = 2113F72C23619D56003C7DF7 /* UserDefault.m */; };
+		2113F72E23619D58003C7DF7 /* UserDefault.m in Sources */ = {isa = PBXBuildFile; fileRef = 2113F72C23619D56003C7DF7 /* UserDefault.m */; };
+		218834FB246BF0C6008C0D08 /* installProtobuf.sh in Resources */ = {isa = PBXBuildFile; fileRef = 218834FA246BF0C6008C0D08 /* installProtobuf.sh */; };
 		21A842D2215A4FE400C6E2C2 /* DefaultWC.m in Sources */ = {isa = PBXBuildFile; fileRef = 21A842D1215A4FE400C6E2C2 /* DefaultWC.m */; };
 		21A842DA215B571F00C6E2C2 /* DSConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 21A842D9215B571F00C6E2C2 /* DSConst.m */; };
 		CF292F6C21466B1B00CD1C78 /* OpenView.m in Sources */ = {isa = PBXBuildFile; fileRef = CF292F6B21466B1B00CD1C78 /* OpenView.m */; };
@@ -21,9 +27,42 @@
 		CF3B07D721464D4800A2BA3C /* STPrivilegedTask.m in Sources */ = {isa = PBXBuildFile; fileRef = CF3B07D521464D4800A2BA3C /* STPrivilegedTask.m */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		2113F7212361776D003C7DF7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CF3B07B621464B8600A2BA3C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2113F7192361776D003C7DF7;
+			remoteInfo = FinderSync;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		2113F7242361776D003C7DF7 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				2113F7232361776D003C7DF7 /* FinderSync.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		210329C8214B920600280DF8 /* cc.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = cc.sh; sourceTree = "<group>"; };
 		210329D2214BAAE000280DF8 /* brewc.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = brewc.sh; sourceTree = "<group>"; };
+		2113F71A2361776D003C7DF7 /* FinderSync.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = FinderSync.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		2113F71C2361776D003C7DF7 /* FinderSync.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FinderSync.h; sourceTree = "<group>"; };
+		2113F71D2361776D003C7DF7 /* FinderSync.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FinderSync.m; sourceTree = "<group>"; };
+		2113F71F2361776D003C7DF7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2113F7202361776D003C7DF7 /* FinderSync.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FinderSync.entitlements; sourceTree = "<group>"; };
+		2113F72823617A74003C7DF7 /* capti.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = capti.png; sourceTree = "<group>"; };
+		2113F72B23619D56003C7DF7 /* UserDefault.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserDefault.h; sourceTree = "<group>"; };
+		2113F72C23619D56003C7DF7 /* UserDefault.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserDefault.m; sourceTree = "<group>"; };
+		218834FA246BF0C6008C0D08 /* installProtobuf.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = installProtobuf.sh; sourceTree = "<group>"; };
 		21A842D0215A4FE400C6E2C2 /* DefaultWC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DefaultWC.h; sourceTree = "<group>"; };
 		21A842D1215A4FE400C6E2C2 /* DefaultWC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DefaultWC.m; sourceTree = "<group>"; };
 		21A842D9215B571F00C6E2C2 /* DSConst.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DSConst.m; sourceTree = "<group>"; };
@@ -39,12 +78,18 @@
 		CF3B07CA21464B8800A2BA3C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CF3B07CC21464B8800A2BA3C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CF3B07CD21464B8800A2BA3C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		CF3B07CF21464B8800A2BA3C /* DSpersonProtobuf.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DSpersonProtobuf.entitlements; sourceTree = "<group>"; };
 		CF3B07D521464D4800A2BA3C /* STPrivilegedTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STPrivilegedTask.m; sourceTree = "<group>"; };
 		CF3B07D621464D4800A2BA3C /* STPrivilegedTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STPrivilegedTask.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		2113F7172361776D003C7DF7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CF3B07BB21464B8600A2BA3C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -55,10 +100,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2113F71B2361776D003C7DF7 /* FinderSync */ = {
+			isa = PBXGroup;
+			children = (
+				2113F72823617A74003C7DF7 /* capti.png */,
+				2113F71C2361776D003C7DF7 /* FinderSync.h */,
+				2113F71D2361776D003C7DF7 /* FinderSync.m */,
+				2113F71F2361776D003C7DF7 /* Info.plist */,
+				2113F7202361776D003C7DF7 /* FinderSync.entitlements */,
+			);
+			path = FinderSync;
+			sourceTree = "<group>";
+		};
 		CF3B07B521464B8600A2BA3C = {
 			isa = PBXGroup;
 			children = (
 				CF3B07C021464B8600A2BA3C /* DSpersonProtobuf */,
+				2113F71B2361776D003C7DF7 /* FinderSync */,
 				CF3B07BF21464B8600A2BA3C /* Products */,
 			);
 			sourceTree = "<group>";
@@ -67,6 +125,7 @@
 			isa = PBXGroup;
 			children = (
 				CF3B07BE21464B8600A2BA3C /* DSpersonProtobuf.app */,
+				2113F71A2361776D003C7DF7 /* FinderSync.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -75,6 +134,7 @@
 			isa = PBXGroup;
 			children = (
 				210329C8214B920600280DF8 /* cc.sh */,
+				218834FA246BF0C6008C0D08 /* installProtobuf.sh */,
 				210329D2214BAAE000280DF8 /* brewc.sh */,
 				CF3B07D621464D4800A2BA3C /* STPrivilegedTask.h */,
 				CF3B07D521464D4800A2BA3C /* STPrivilegedTask.m */,
@@ -92,7 +152,8 @@
 				CF3B07CC21464B8800A2BA3C /* Info.plist */,
 				CF292F6E2146786700CD1C78 /* script.sh */,
 				CF3B07CD21464B8800A2BA3C /* main.m */,
-				CF3B07CF21464B8800A2BA3C /* DSpersonProtobuf.entitlements */,
+				2113F72B23619D56003C7DF7 /* UserDefault.h */,
+				2113F72C23619D56003C7DF7 /* UserDefault.m */,
 			);
 			path = DSpersonProtobuf;
 			sourceTree = "<group>";
@@ -100,6 +161,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		2113F7192361776D003C7DF7 /* FinderSync */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2113F7272361776D003C7DF7 /* Build configuration list for PBXNativeTarget "FinderSync" */;
+			buildPhases = (
+				2113F7162361776D003C7DF7 /* Sources */,
+				2113F7172361776D003C7DF7 /* Frameworks */,
+				2113F7182361776D003C7DF7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FinderSync;
+			productName = FinderSync;
+			productReference = 2113F71A2361776D003C7DF7 /* FinderSync.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		CF3B07BD21464B8600A2BA3C /* DSpersonProtobuf */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = CF3B07D221464B8800A2BA3C /* Build configuration list for PBXNativeTarget "DSpersonProtobuf" */;
@@ -107,10 +185,12 @@
 				CF3B07BA21464B8600A2BA3C /* Sources */,
 				CF3B07BB21464B8600A2BA3C /* Frameworks */,
 				CF3B07BC21464B8600A2BA3C /* Resources */,
+				2113F7242361776D003C7DF7 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				2113F7222361776D003C7DF7 /* PBXTargetDependency */,
 			);
 			name = DSpersonProtobuf;
 			productName = DSpersonProtobuf;
@@ -126,6 +206,9 @@
 				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = bat;
 				TargetAttributes = {
+					2113F7192361776D003C7DF7 = {
+						CreatedOnToolsVersion = 11.1;
+					};
 					CF3B07BD21464B8600A2BA3C = {
 						CreatedOnToolsVersion = 9.4.1;
 						SystemCapabilities = {
@@ -150,16 +233,26 @@
 			projectRoot = "";
 			targets = (
 				CF3B07BD21464B8600A2BA3C /* DSpersonProtobuf */,
+				2113F7192361776D003C7DF7 /* FinderSync */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		2113F7182361776D003C7DF7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2113F72923617A74003C7DF7 /* capti.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CF3B07BC21464B8600A2BA3C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				CF3B07C821464B8800A2BA3C /* Assets.xcassets in Resources */,
+				218834FB246BF0C6008C0D08 /* installProtobuf.sh in Resources */,
 				210329C9214B920600280DF8 /* cc.sh in Resources */,
 				210329D3214BAAE000280DF8 /* brewc.sh in Resources */,
 				CF292F6F2146786700CD1C78 /* script.sh in Resources */,
@@ -170,6 +263,15 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		2113F7162361776D003C7DF7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2113F72E23619D58003C7DF7 /* UserDefault.m in Sources */,
+				2113F71E2361776D003C7DF7 /* FinderSync.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CF3B07BA21464B8600A2BA3C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -178,6 +280,7 @@
 				21A842D2215A4FE400C6E2C2 /* DefaultWC.m in Sources */,
 				CF3B07CE21464B8800A2BA3C /* main.m in Sources */,
 				CF3B07D721464D4800A2BA3C /* STPrivilegedTask.m in Sources */,
+				2113F72D23619D56003C7DF7 /* UserDefault.m in Sources */,
 				CF3B07C321464B8600A2BA3C /* AppDelegate.m in Sources */,
 				CF292F6C21466B1B00CD1C78 /* OpenView.m in Sources */,
 				21A842DA215B571F00C6E2C2 /* DSConst.m in Sources */,
@@ -185,6 +288,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2113F7222361776D003C7DF7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2113F7192361776D003C7DF7 /* FinderSync */;
+			targetProxy = 2113F7212361776D003C7DF7 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		CF3B07C921464B8800A2BA3C /* Main.storyboard */ = {
@@ -198,6 +309,51 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		2113F7252361776D003C7DF7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = FinderSync/FinderSync.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = KB9FW2X72R;
+				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = FinderSync/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = bat.DSpersonProtobuf.FinderSync;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		2113F7262361776D003C7DF7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = FinderSync/FinderSync.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = KB9FW2X72R;
+				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = FinderSync/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = bat.DSpersonProtobuf.FinderSync;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
 		CF3B07D021464B8800A2BA3C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -311,6 +467,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = DSpersonProtobuf/DSpersonProtobuf.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = KB9FW2X72R;
@@ -324,7 +481,7 @@
 					"$(PROJECT_DIR)/DSpersonProtobuf/Protoc/lib",
 					"$(PROJECT_DIR)/DSpersonProtobuf",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				PRODUCT_BUNDLE_IDENTIFIER = bat.DSpersonProtobuf;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -334,6 +491,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = DSpersonProtobuf/DSpersonProtobuf.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = KB9FW2X72R;
@@ -347,7 +505,7 @@
 					"$(PROJECT_DIR)/DSpersonProtobuf/Protoc/lib",
 					"$(PROJECT_DIR)/DSpersonProtobuf",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				PRODUCT_BUNDLE_IDENTIFIER = bat.DSpersonProtobuf;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -356,6 +514,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		2113F7272361776D003C7DF7 /* Build configuration list for PBXNativeTarget "FinderSync" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2113F7252361776D003C7DF7 /* Debug */,
+				2113F7262361776D003C7DF7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		CF3B07B921464B8600A2BA3C /* Build configuration list for PBXProject "DSpersonProtobuf" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
