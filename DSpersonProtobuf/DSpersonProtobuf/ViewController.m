@@ -110,37 +110,43 @@
                     [alert beginSheetModalForWindow:self.view.window completionHandler:^(NSModalResponse returnCode) {
                         __strong ViewController *strongSelf = weakSelf;
                         if (returnCode == 1000) {
-                            [strongSelf install:@"installProtobuf.sh"];
-                            
-                            return;
-                            NSString *cc = [NSString stringWithFormat:@"/usr/local/bin/brew install protobuf"];
-                            STPrivilegedTask *privilegedTask = [[STPrivilegedTask alloc] init];
-                            [privilegedTask setLaunchPath:@"/bin/bash"];///bin/bash
-                            [privilegedTask setArguments:@[@"-c", cc]];
-                            [privilegedTask setCurrentDirectoryPath:[[NSBundle mainBundle] resourcePath]];
-                            OSStatus err = [privilegedTask launch];
-                            if (err != errAuthorizationSuccess) {
-                                if (err == errAuthorizationCanceled) {
-                                    NSLog(@"User cancelled");
-                                    return;
-                                }  else {
-                                    NSLog(@"Something went wrong: %d", (int)err);
-                                }
-                            }
-                            [privilegedTask waitUntilExit];
-                            NSFileHandle *handle = [privilegedTask outputFileHandle];
-                            NSData *outData = [handle readDataToEndOfFile];
-                            NSString * rs = [[NSString alloc] initWithData:outData encoding:NSUTF8StringEncoding];
-                            
-                            if ([rs isEqualToString:@"Updating Homebrew..."]) {
-                                self.textView.string = @"此处非常慢 最好使用 VPN";
-                            } else {
+                            self.textView.string = @"此处非常慢 或者 终端翻墙下执行brew install protobuf";
+                            [strongSelf install:@"installProtobuf.sh" blocl:^(NSString *rs) {
+                                
                                 self.textView.string = rs;
-                                //                            [self.textView scrollPoint:CGPointMake(0, CGRectGetMaxX(self.textView.frame))];
                                 [self.textView scrollToEndOfDocument:nil];
                                 self.selectButton.enabled = true;
                                 self->canSelect = true;
-                            }
+                            }];
+                            
+//                            NSString *cc = [NSString stringWithFormat:@"/usr/local/bin/brew install protobuf"];
+//                            STPrivilegedTask *privilegedTask = [[STPrivilegedTask alloc] init];
+//                            [privilegedTask setLaunchPath:@"/bin/bash"];///bin/bash
+//                            [privilegedTask setArguments:@[@"-c", cc]];
+//                            [privilegedTask setCurrentDirectoryPath:[[NSBundle mainBundle] resourcePath]];
+//                            OSStatus err = [privilegedTask launch];
+//                            if (err != errAuthorizationSuccess) {
+//                                if (err == errAuthorizationCanceled) {
+//                                    NSLog(@"User cancelled");
+//                                    return;
+//                                }  else {
+//                                    NSLog(@"Something went wrong: %d", (int)err);
+//                                }
+//                            }
+//                            [privilegedTask waitUntilExit];
+//                            NSFileHandle *handle = [privilegedTask outputFileHandle];
+//                            NSData *outData = [handle readDataToEndOfFile];
+//                            NSString * rs = [[NSString alloc] initWithData:outData encoding:NSUTF8StringEncoding];
+                            
+//                            if ([rs isEqualToString:@"Updating Homebrew..."]) {
+//                                self.textView.string = @"此处非常慢 最好使用 VPN";
+//                            } else {
+//                                self.textView.string = rs;
+//                                //                            [self.textView scrollPoint:CGPointMake(0, CGRectGetMaxX(self.textView.frame))];
+//                                [self.textView scrollToEndOfDocument:nil];
+//                                self.selectButton.enabled = true;
+//                                self->canSelect = true;
+//                            }
                         } else if(returnCode == 1001) {
                             
                         }
@@ -195,7 +201,7 @@
     }
 }
 
-- (void)install:(NSString *)agruments {
+- (void)install:(NSString *)agruments blocl:(void(^)(NSString *))block {
     dispatch_group_t group = dispatch_group_create();
     dispatch_queue_t queue = dispatch_queue_create("com.dsperson.install", DISPATCH_QUEUE_CONCURRENT);
     __block NSString *rs = @"";
@@ -215,10 +221,11 @@
         
         NSData *outputData = [readHandle readDataToEndOfFile];
         rs = [[NSString alloc] initWithData:outputData encoding:NSUTF8StringEncoding];
-        NSLog(@"%@", rs);
     });
     dispatch_group_notify(group, queue, ^{
-        NSLog(@"%@", rs);
+        dispatch_async(dispatch_get_main_queue(), ^{
+             block(rs);
+        });
     });
     
 }
