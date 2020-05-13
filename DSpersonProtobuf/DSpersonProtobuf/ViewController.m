@@ -156,7 +156,7 @@
                 }else {
                     self->canSelect = true;
                     self.selectButton.enabled = true;
-                    self.textView.string = @"已安装Protobuf\n请选择文件夹或者拖动含有Protobuf的文件夹到App白色区域中";
+                    self.textView.string = @"已安装Protobuf\n1. 请选择文件夹\n2.拖动含有Protobuf的文件夹到App白色区域中";
                 }
                 
             });
