@@ -24,7 +24,6 @@
 		CF3B07C821464B8800A2BA3C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CF3B07C721464B8800A2BA3C /* Assets.xcassets */; };
 		CF3B07CB21464B8800A2BA3C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CF3B07C921464B8800A2BA3C /* Main.storyboard */; };
 		CF3B07CE21464B8800A2BA3C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CF3B07CD21464B8800A2BA3C /* main.m */; };
-		CF3B07D721464D4800A2BA3C /* STPrivilegedTask.m in Sources */ = {isa = PBXBuildFile; fileRef = CF3B07D521464D4800A2BA3C /* STPrivilegedTask.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,8 +80,6 @@
 		CF3B07CA21464B8800A2BA3C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CF3B07CC21464B8800A2BA3C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CF3B07CD21464B8800A2BA3C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		CF3B07D521464D4800A2BA3C /* STPrivilegedTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STPrivilegedTask.m; sourceTree = "<group>"; };
-		CF3B07D621464D4800A2BA3C /* STPrivilegedTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STPrivilegedTask.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,8 +136,6 @@
 				210329C8214B920600280DF8 /* cc.sh */,
 				218834FA246BF0C6008C0D08 /* installProtobuf.sh */,
 				210329D2214BAAE000280DF8 /* brewc.sh */,
-				CF3B07D621464D4800A2BA3C /* STPrivilegedTask.h */,
-				CF3B07D521464D4800A2BA3C /* STPrivilegedTask.m */,
 				CF3B07C121464B8600A2BA3C /* AppDelegate.h */,
 				CF3B07C221464B8600A2BA3C /* AppDelegate.m */,
 				CF3B07C421464B8600A2BA3C /* ViewController.h */,
@@ -283,7 +278,6 @@
 				CF3B07C621464B8600A2BA3C /* ViewController.m in Sources */,
 				21A842D2215A4FE400C6E2C2 /* DefaultWC.m in Sources */,
 				CF3B07CE21464B8800A2BA3C /* main.m in Sources */,
-				CF3B07D721464D4800A2BA3C /* STPrivilegedTask.m in Sources */,
 				2113F72D23619D56003C7DF7 /* UserDefault.m in Sources */,
 				CF3B07C321464B8600A2BA3C /* AppDelegate.m in Sources */,
 				CF292F6C21466B1B00CD1C78 /* OpenView.m in Sources */,

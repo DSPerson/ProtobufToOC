@@ -7,14 +7,14 @@
 //
 
 #import "ViewController.h"
-#import "STPrivilegedTask.h"
+
 #import "OpenView.h"
 #import "DSConst.m"
 #import "UserDefault.h"
 
 @interface ViewController ()
 
-@property (nonatomic, strong) STPrivilegedTask *taskS;
+//@property (nonatomic, strong) STPrivilegedTask *taskS;
 @end
 
 @implementation ViewController
@@ -177,53 +177,53 @@
     
 }
 
-- (BOOL)checkBrew {
-    STPrivilegedTask *privilegedTask = [[STPrivilegedTask alloc] init];
-    [privilegedTask setLaunchPath:@"/bin/bash"];
-    [privilegedTask setArguments:@[
-        @"brewc.sh"]];
-    [privilegedTask setCurrentDirectoryPath:[[NSBundle mainBundle] resourcePath]];
-    OSStatus err = [privilegedTask launch];
-    if (err != errAuthorizationSuccess) {
-        if (err == errAuthorizationCanceled) {
-            NSLog(@"User cancelled");
-            return false;
-        }  else {
-            NSLog(@"Something went wrong: %d", (int)err);
-            // For error codes, see http://www.opensource.apple.com/source/libsecurity_authorization/libsecurity_authorization-36329/lib/Authorization.h
-        }
-    }
-    [privilegedTask waitUntilExit];
-    NSFileHandle *handle = [privilegedTask outputFileHandle];
-    NSData *outData = [handle readDataToEndOfFile];
-    NSString * rs = [[NSString alloc] initWithData:outData encoding:NSUTF8StringEncoding];
-    if ([rs integerValue] == 0) {
-        //        /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-        STPrivilegedTask *privilegedTask = [[STPrivilegedTask alloc] init];
-        [privilegedTask setLaunchPath:@"/bin/bash"];
-        [privilegedTask setArguments:@[
-            @"-c", @"/usr/bin/ruby -e '$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)'"]];
-        [privilegedTask setCurrentDirectoryPath:[[NSBundle mainBundle] resourcePath]];
-        OSStatus err = [privilegedTask launch];
-        if (err != errAuthorizationSuccess) {
-            if (err == errAuthorizationCanceled) {
-                NSLog(@"User cancelled");
-                return false;
-            }  else {
-                NSLog(@"Something went wrong: %d", (int)err);
-                // For error codes, see http://www.opensource.apple.com/source/libsecurity_authorization/libsecurity_authorization-36329/lib/Authorization.h
-            }
-        }
-        [privilegedTask waitUntilExit];
-        NSFileHandle *handle = [privilegedTask outputFileHandle];
-        NSData *outData = [handle readDataToEndOfFile];
-        NSString * rs = [[NSString alloc] initWithData:outData encoding:NSUTF8StringEncoding];
-        self.textView.string = @"正在安装 Home brew";
-        
-        return false;
-    }
-    return true;
-}
+//- (BOOL)checkBrew {
+//    STPrivilegedTask *privilegedTask = [[STPrivilegedTask alloc] init];
+//    [privilegedTask setLaunchPath:@"/bin/bash"];
+//    [privilegedTask setArguments:@[
+//        @"brewc.sh"]];
+//    [privilegedTask setCurrentDirectoryPath:[[NSBundle mainBundle] resourcePath]];
+//    OSStatus err = [privilegedTask launch];
+//    if (err != errAuthorizationSuccess) {
+//        if (err == errAuthorizationCanceled) {
+//            NSLog(@"User cancelled");
+//            return false;
+//        }  else {
+//            NSLog(@"Something went wrong: %d", (int)err);
+//            // For error codes, see http://www.opensource.apple.com/source/libsecurity_authorization/libsecurity_authorization-36329/lib/Authorization.h
+//        }
+//    }
+//    [privilegedTask waitUntilExit];
+//    NSFileHandle *handle = [privilegedTask outputFileHandle];
+//    NSData *outData = [handle readDataToEndOfFile];
+//    NSString * rs = [[NSString alloc] initWithData:outData encoding:NSUTF8StringEncoding];
+//    if ([rs integerValue] == 0) {
+//        //        /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+//        STPrivilegedTask *privilegedTask = [[STPrivilegedTask alloc] init];
+//        [privilegedTask setLaunchPath:@"/bin/bash"];
+//        [privilegedTask setArguments:@[
+//            @"-c", @"/usr/bin/ruby -e '$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)'"]];
+//        [privilegedTask setCurrentDirectoryPath:[[NSBundle mainBundle] resourcePath]];
+//        OSStatus err = [privilegedTask launch];
+//        if (err != errAuthorizationSuccess) {
+//            if (err == errAuthorizationCanceled) {
+//                NSLog(@"User cancelled");
+//                return false;
+//            }  else {
+//                NSLog(@"Something went wrong: %d", (int)err);
+//                // For error codes, see http://www.opensource.apple.com/source/libsecurity_authorization/libsecurity_authorization-36329/lib/Authorization.h
+//            }
+//        }
+//        [privilegedTask waitUntilExit];
+//        NSFileHandle *handle = [privilegedTask outputFileHandle];
+//        NSData *outData = [handle readDataToEndOfFile];
+//        NSString * rs = [[NSString alloc] initWithData:outData encoding:NSUTF8StringEncoding];
+//        self.textView.string = @"正在安装 Home brew";
+//
+//        return false;
+//    }
+//    return true;
+//}
 
 
 - (void)brewProtobuf {
