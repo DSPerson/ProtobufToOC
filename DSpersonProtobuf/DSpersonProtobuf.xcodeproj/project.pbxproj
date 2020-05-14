@@ -17,8 +17,8 @@
 		218834FB246BF0C6008C0D08 /* installProtobuf.sh in Resources */ = {isa = PBXBuildFile; fileRef = 218834FA246BF0C6008C0D08 /* installProtobuf.sh */; };
 		21A842D2215A4FE400C6E2C2 /* DefaultWC.m in Sources */ = {isa = PBXBuildFile; fileRef = 21A842D1215A4FE400C6E2C2 /* DefaultWC.m */; };
 		21A842DA215B571F00C6E2C2 /* DSConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 21A842D9215B571F00C6E2C2 /* DSConst.m */; };
+		21D20FA9246CDB2400BD7648 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 21D20FAB246CDB2400BD7648 /* Localizable.strings */; };
 		CF292F6C21466B1B00CD1C78 /* OpenView.m in Sources */ = {isa = PBXBuildFile; fileRef = CF292F6B21466B1B00CD1C78 /* OpenView.m */; };
-		CF292F6F2146786700CD1C78 /* script.sh in Resources */ = {isa = PBXBuildFile; fileRef = CF292F6E2146786700CD1C78 /* script.sh */; };
 		CF3B07C321464B8600A2BA3C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CF3B07C221464B8600A2BA3C /* AppDelegate.m */; };
 		CF3B07C621464B8600A2BA3C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF3B07C521464B8600A2BA3C /* ViewController.m */; };
 		CF3B07C821464B8800A2BA3C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CF3B07C721464B8800A2BA3C /* Assets.xcassets */; };
@@ -66,9 +66,12 @@
 		21A842D0215A4FE400C6E2C2 /* DefaultWC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DefaultWC.h; sourceTree = "<group>"; };
 		21A842D1215A4FE400C6E2C2 /* DefaultWC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DefaultWC.m; sourceTree = "<group>"; };
 		21A842D9215B571F00C6E2C2 /* DSConst.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DSConst.m; sourceTree = "<group>"; };
+		21D20FA6246CDAFA00BD7648 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
+		21D20FAA246CDB2400BD7648 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		21D20FAC246CDB2600BD7648 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		21D20FAE246CDB9100BD7648 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		CF292F6A21466B1B00CD1C78 /* OpenView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OpenView.h; sourceTree = "<group>"; };
 		CF292F6B21466B1B00CD1C78 /* OpenView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OpenView.m; sourceTree = "<group>"; };
-		CF292F6E2146786700CD1C78 /* script.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = script.sh; sourceTree = "<group>"; };
 		CF3B07BE21464B8600A2BA3C /* DSpersonProtobuf.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DSpersonProtobuf.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF3B07C121464B8600A2BA3C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		CF3B07C221464B8600A2BA3C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -150,10 +153,10 @@
 				CF3B07C721464B8800A2BA3C /* Assets.xcassets */,
 				CF3B07C921464B8800A2BA3C /* Main.storyboard */,
 				CF3B07CC21464B8800A2BA3C /* Info.plist */,
-				CF292F6E2146786700CD1C78 /* script.sh */,
 				CF3B07CD21464B8800A2BA3C /* main.m */,
 				2113F72B23619D56003C7DF7 /* UserDefault.h */,
 				2113F72C23619D56003C7DF7 /* UserDefault.m */,
+				21D20FAB246CDB2400BD7648 /* Localizable.strings */,
 			);
 			path = DSpersonProtobuf;
 			sourceTree = "<group>";
@@ -226,6 +229,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hans",
 			);
 			mainGroup = CF3B07B521464B8600A2BA3C;
 			productRefGroup = CF3B07BF21464B8600A2BA3C /* Products */;
@@ -252,10 +256,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				CF3B07C821464B8800A2BA3C /* Assets.xcassets in Resources */,
+				21D20FA9246CDB2400BD7648 /* Localizable.strings in Resources */,
 				218834FB246BF0C6008C0D08 /* installProtobuf.sh in Resources */,
 				210329C9214B920600280DF8 /* cc.sh in Resources */,
 				210329D3214BAAE000280DF8 /* brewc.sh in Resources */,
-				CF292F6F2146786700CD1C78 /* script.sh in Resources */,
 				CF3B07CB21464B8800A2BA3C /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -298,10 +302,21 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		21D20FAB246CDB2400BD7648 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				21D20FAA246CDB2400BD7648 /* zh-Hans */,
+				21D20FAC246CDB2600BD7648 /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		CF3B07C921464B8800A2BA3C /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				CF3B07CA21464B8800A2BA3C /* Base */,
+				21D20FA6246CDAFA00BD7648 /* zh-Hans */,
+				21D20FAE246CDB9100BD7648 /* en */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -358,6 +373,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -416,6 +432,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";

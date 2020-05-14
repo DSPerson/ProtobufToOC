@@ -9,7 +9,7 @@
 #import "AppDelegate.h"
 #import "DSConst.m"
 #import "UserDefault.h"
-@interface AppDelegate ()
+@interface AppDelegate () <NSMenuDelegate>
 
 @property (weak) IBOutlet NSMenu *openRecentMenu;
 @end
@@ -17,6 +17,7 @@
 @implementation AppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+    _openRecentMenu.delegate = self;
     NSURL *url = [UserDefault getselectPath];
     if (url) {
         NSAlert *aler = [[NSAlert alloc] init];
@@ -32,8 +33,8 @@
 //        }];
     }
     // Insert code here to initialize your application
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateOpenRecent) name:kRecentListNotificationName object:nil];
-    [self openRecent:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateOpenRecent) name:kUpdateRecentListNotificationName object:nil];
+    [self updateOpenRecent];
     
 }
 - (void)application:(NSApplication *)application openURLs:(NSArray<NSURL *> *)urls {
@@ -55,12 +56,36 @@
 //    [self updateOpenRecent];
 }
 - (IBAction)openRecent:(NSMenuItem *)sender {
-    [self updateOpenRecent];
+    
 }
 
 - (void)updateOpenRecent {
+    [_openRecentMenu update];
+//    image.size = NSMakeSize(image.size.width * 0.7, image.size.height * 0.7);
+//    NSMenu *menu = [[NSMenu alloc] init];
+
+
+//    [_openRecentMenu addItem:menu];
+//    _openRecentMenu.
+}
+- (void)callRecentMenuSub:(NSMenuItem *)select {
+    NSInteger index = [_openRecentMenu.itemArray indexOfObject:select];
+    NSArray *lists = [[NSUserDefaults standardUserDefaults] objectForKey:kRecentList];
+    if (lists.count > index) {
+        NSString *path = lists[index];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kRecentListNotificationName object:path];
+    }
+}
+- (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag {
+    [NSApp activateIgnoringOtherApps:true];
+    [_currentController.window makeKeyAndOrderFront:self];
+    return true;
+}
+- (void)menuNeedsUpdate:(NSMenu*)menu {
     NSArray *lists = [[NSUserDefaults standardUserDefaults] objectForKey:kRecentList];
     [_openRecentMenu removeAllItems];
+    NSImage *image = [NSImage imageNamed:NSImageNameFolder];
+    
     [lists enumerateObjectsUsingBlock:^(NSString *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         NSURL *pathURL = [NSURL fileURLWithPath:obj];
         NSString *name = pathURL.lastPathComponent;
@@ -68,22 +93,15 @@
             NSMenuItem *item = [[NSMenuItem alloc] init];;
             item.title = name;
             item.action = @selector(callRecentMenuSub:);
-//            item.keyEquivalent = @"c";
-            NSImage *image = [NSImage imageNamed:NSImageNameFolder];
-            image.size = NSMakeSize(image.size.width * 0.7, image.size.height * 0.7);
-            item.image = image;
-            [self->_openRecentMenu addItem:item];
+            item.target = self;
+            //            item.keyEquivalent = @"c";
+            item.image = [image copy];
+            item.image.size = CGSizeMake(image.size.width * 0.5, image.size.height * 0.5);
+                        [self->_openRecentMenu addItem:item];
+            
         }
+        
     }];
 }
-- (void)callRecentMenuSub:(NSMenuItem *)select {
-    
-}
-- (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag {
-    [NSApp activateIgnoringOtherApps:true];
-    [_currentController.window makeKeyAndOrderFront:self];
-    return true;
-}
-
 
 @end

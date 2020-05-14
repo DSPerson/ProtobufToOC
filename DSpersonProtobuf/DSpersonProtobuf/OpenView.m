@@ -104,14 +104,11 @@
     sourceDragMask = [sender draggingSourceOperationMask];
     pboard = [sender draggingPasteboard];
     if ([[pboard types] containsObject:NSFilenamesPboardType]) {
-//        NSDragOperation newmask = sourceDragMask & NSDragOperationLink;
         if (sourceDragMask & NSDragOperationLink) {
             id cc = [pboard propertyListForType:NSFilenamesPboardType];
             if ([cc isKindOfClass:[NSArray class]]) {
                 NSArray *dd = (NSArray *)cc;
                 NSString *fi = [dd firstObject];
-//                BOOL isDirectory = false;
-//                BOOL fileExistsAtPath = [[NSFileManager defaultManager] fileExistsAtPath:fi isDirectory:&isDirectory];
                 if (fi && [fi pathExtension].length == 0) {
                     _currentDraging = true;
                     self.dragEX(true);
@@ -151,12 +148,12 @@
         if (first) {
             NSMutableArray *arr = [[[NSUserDefaults standardUserDefaults] objectForKey:kRecentList] mutableCopy];
             if (![arr containsObject:first]) {
-                arr = [NSMutableArray array];
+//                arr = [NSMutableArray array];
                 [arr addObject:first];
                 [[NSUserDefaults standardUserDefaults] setObject:arr forKey:kRecentList];
                 [[NSUserDefaults standardUserDefaults] synchronize];
             }
-            [[NSNotificationCenter defaultCenter] postNotificationName:kRecentListNotificationName object:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateRecentListNotificationName object:nil];
             [self exit];
             !self.dragFile ?: self.dragFile(first);
         }

@@ -10,3 +10,4 @@
 
 static NSString *kRecentList = @"kRecentList";
 static NSString *kRecentListNotificationName = @"kRecentListNotificationName";
+static NSString *kUpdateRecentListNotificationName = @"kUpdateRecentListNotificationName";

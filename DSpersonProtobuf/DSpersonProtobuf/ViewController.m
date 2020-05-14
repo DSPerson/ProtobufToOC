@@ -32,9 +32,16 @@
     self.dragEnterMaskView.layer.backgroundColor = [NSColor whiteColor].CGColor;
     // Do any additional setup after loading the view.
     [self check];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateOpenRecent:) name:kRecentListNotificationName object:nil];
 }
 
-
+- (void)updateOpenRecent:(NSNotification *)notification {
+    NSString *path = notification.object;
+    if (path != nil && path.length != 0) {
+        [self createShell:path];
+    }
+}
 - (NSString *)cmd:(NSString *)cmd
 {
     // 初始化并设置shell路径
@@ -104,7 +111,6 @@
                     [alert addButtonWithTitle:@"确认"];
                     [alert addButtonWithTitle:@"取消"];
                     
-                    
                     NSButton *cancel = [[NSButton alloc] init];
                     cancel.title = @"取消";
                     __weak ViewController *weakSelf = self;
@@ -112,42 +118,13 @@
                         __strong ViewController *strongSelf = weakSelf;
                         if (returnCode == 1000) {
                             self.textView.string = @"此处非常慢 或者 终端翻墙下执行brew install protobuf";
-                            [strongSelf install:@"installProtobuf.sh" blocl:^(NSString *rs) {
+                            [strongSelf install:@[@"installProtobuf.sh"] blocl:^(NSString *rs) {
                                 
                                 self.textView.string = rs;
                                 [self.textView scrollToEndOfDocument:nil];
                                 self.selectButton.enabled = true;
                                 self->canSelect = true;
                             }];
-                            
-//                            NSString *cc = [NSString stringWithFormat:@"/usr/local/bin/brew install protobuf"];
-//                            STPrivilegedTask *privilegedTask = [[STPrivilegedTask alloc] init];
-//                            [privilegedTask setLaunchPath:@"/bin/bash"];///bin/bash
-//                            [privilegedTask setArguments:@[@"-c", cc]];
-//                            [privilegedTask setCurrentDirectoryPath:[[NSBundle mainBundle] resourcePath]];
-//                            OSStatus err = [privilegedTask launch];
-//                            if (err != errAuthorizationSuccess) {
-//                                if (err == errAuthorizationCanceled) {
-//                                    NSLog(@"User cancelled");
-//                                    return;
-//                                }  else {
-//                                    NSLog(@"Something went wrong: %d", (int)err);
-//                                }
-//                            }
-//                            [privilegedTask waitUntilExit];
-//                            NSFileHandle *handle = [privilegedTask outputFileHandle];
-//                            NSData *outData = [handle readDataToEndOfFile];
-//                            NSString * rs = [[NSString alloc] initWithData:outData encoding:NSUTF8StringEncoding];
-                            
-//                            if ([rs isEqualToString:@"Updating Homebrew..."]) {
-//                                self.textView.string = @"此处非常慢 最好使用 VPN";
-//                            } else {
-//                                self.textView.string = rs;
-//                                //                            [self.textView scrollPoint:CGPointMake(0, CGRectGetMaxX(self.textView.frame))];
-//                                [self.textView scrollToEndOfDocument:nil];
-//                                self.selectButton.enabled = true;
-//                                self->canSelect = true;
-//                            }
                         } else if(returnCode == 1001) {
                             
                         }
@@ -162,54 +139,18 @@
             });
         });
         
-        
-        
-        //            NSLog(@"%d", [outputString intValue]);
-        //            return;
-        //            STPrivilegedTask *privilegedTask = [[STPrivilegedTask alloc] init];
-        //            [privilegedTask setLaunchPath:@"/bin/bash"];
-        //            [privilegedTask setArguments:@[@"cc.sh"]];
-        //            [privilegedTask setCurrentDirectoryPath:[[NSBundle mainBundle] resourcePath]];
-        //            OSStatus err = [privilegedTask launch];
-        //            if (err != errAuthorizationSuccess) {
-        //                if (err == errAuthorizationCanceled) {
-        //                    NSLog(@"User cancelled");
-        //                    self->checkOnce = false;
-        //                    self.recheckButton.hidden = false;
-        //                    self.recheckButton.enabled = true;
-        //                    return;
-        //                }  else {
-        //                    NSLog(@"Something went wrong: %d", (int)err);
-        //                    self->checkOnce = false;
-        //                    self.recheckButton.enabled = true;
-        //                }
-        //            } else {
-        //                //                [self.view.window orderFront:self];
-        //                [NSApp activateIgnoringOtherApps:true];
-        //            }
-        //            self.recheckButton.enabled = true;
-        //            self.recheckButton.hidden = true;
-        //            NSLog(@"--->开始执行检查1");
-        //            [privilegedTask waitUntilExit];
-        //            NSLog(@"--->开始执行检查2");
-        //            NSFileHandle *handle = [privilegedTask outputFileHandle];
-        //            NSLog(@"--->开始执行检查3");
-        //            NSData *outData = [handle readDataToEndOfFile];
-        //            NSString * rs = [[NSString alloc] initWithData:outData encoding:NSUTF8StringEncoding];
-        
-        
         return;
     }
 }
 
-- (void)install:(NSString *)agruments blocl:(void(^)(NSString *))block {
+- (void)install:(NSArray *)agruments blocl:(void(^)(NSString *))block {
     dispatch_group_t group = dispatch_group_create();
     dispatch_queue_t queue = dispatch_queue_create("com.dsperson.install", DISPATCH_QUEUE_CONCURRENT);
     __block NSString *rs = @"";
     dispatch_group_async(group, queue, ^{
         NSTask *task = [[NSTask alloc] init];
         task.launchPath = @"/bin/bash";
-        task.arguments = @[agruments];
+        task.arguments = agruments;
         task.currentDirectoryPath = [[NSBundle mainBundle] resourcePath];
         
         NSPipe *outputPipe = [NSPipe pipe];
@@ -225,7 +166,7 @@
     });
     dispatch_group_notify(group, queue, ^{
         dispatch_async(dispatch_get_main_queue(), ^{
-             block(rs);
+            block(rs);
         });
     });
     
@@ -357,63 +298,49 @@
     }];
     [string appendFormat:@"\n"];
     [string appendFormat:@"exit 0"];
-    //    NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];
-    //    [fileHandle writeData:data];
-    
-    STPrivilegedTask *privilegedTask = [[STPrivilegedTask alloc] init];
-    [privilegedTask setLaunchPath:@"/bin/bash"];
-    [privilegedTask setArguments:@[@"-c",
-                                   string]];
-    [privilegedTask setCurrentDirectoryPath:[[NSBundle mainBundle] resourcePath]];
-    OSStatus err = [privilegedTask launch];
-    if (err != errAuthorizationSuccess) {
-        if (err == errAuthorizationCanceled) {
-            NSLog(@"User cancelled");
-            return;
-        }  else {
-            NSLog(@"Something went wrong: %d", (int)err);
-            // For error codes, see http://www.opensource.apple.com/source/libsecurity_authorization/libsecurity_authorization-36329/lib/Authorization.h
+
+    __weak ViewController *weakSelf = self;
+    [self install:@[@"-c",
+                    string] blocl:^(NSString *rs2) {
+        __strong ViewController *strongSelf = weakSelf;
+        NSString *rs = rs2;
+        if (rs.length == 0) {
+            rs = @"成功";
+            rs = [rs stringByAppendingString:[NSString stringWithFormat:@"生成路径 --> \n%@", needDirectory]];
+            
+            NSTask *task = [[NSTask alloc] init];
+            task.launchPath = @"/bin/bash";
+            task.arguments = @[@"-c", @"cd ~/Desktop; open Proto_OBJC"];
+            task.currentDirectoryPath = [[NSBundle mainBundle] resourcePath];
+            
+            [task launch];
+            [task waitUntilExit];
+            
+        } else {
+            rs = @"失败";
         }
-    }
-    NSLog(@"--->开始执行检查4");
-    [privilegedTask waitUntilExit];
-    NSLog(@"--->开始执行检查5");
-    NSFileHandle *handle = [privilegedTask outputFileHandle];
-    NSLog(@"--->开始执行检查6");
-    NSData *outData = [handle readDataToEndOfFile];
-    NSString * rs = [[NSString alloc] initWithData:outData encoding:NSUTF8StringEncoding];
-    if (rs.length == 0) {
-        rs = @"成功";
-        rs = [rs stringByAppendingString:[NSString stringWithFormat:@"生成路径 --> \n%@", needDirectory]];
-        STPrivilegedTask *privilegedTask = [[STPrivilegedTask alloc] init];
-        [privilegedTask setLaunchPath:@"/bin/bash"];
-        [privilegedTask setArguments:@[@"-c", @"cd ~/Desktop; open Proto_OBJC"]];
-        [privilegedTask launch];
-        
-    } else {
-        rs = @"失败";
-    }
-    self.textView.string = rs;
-    NSString *cc = @"objc_objc";
-    NSUserDefaults *defalut = [NSUserDefaults standardUserDefaults];
-    if (![defalut boolForKey:cc] && [_selectIndex isEqualToString: @"objc"]) {
-        NSAlert *alert = [[NSAlert alloc] init];
-        alert.messageText = @"OC 是 MRC文件, 如果工程为ARC工程, 则需要在 'Build Phases -> Compile Sources' 添加 '-fno-objc-arc'";
-        alert.alertStyle = NSAlertStyleWarning;
-        
-        
-        [alert addButtonWithTitle:@"确定"];
-        [alert addButtonWithTitle:@"不再提示"];
-        
-        [alert beginSheetModalForWindow:self.view.window completionHandler:^(NSModalResponse returnCode) {
-            if (returnCode == 1000) {
-                
-            } else if (returnCode == 1001) {
-                [defalut setBool:true forKey:cc];
-                [defalut synchronize];
-            }
-        }];
-    }
+        self.textView.string = rs;
+        NSString *cc = @"objc_objc";
+        NSUserDefaults *defalut = [NSUserDefaults standardUserDefaults];
+        if (![defalut boolForKey:cc] && [strongSelf->_selectIndex isEqualToString: @"objc"]) {
+            NSAlert *alert = [[NSAlert alloc] init];
+            alert.messageText = @"OC 是 MRC文件, 如果工程为ARC工程, 则需要在 'Build Phases -> Compile Sources' 添加 '-fno-objc-arc'";
+            alert.alertStyle = NSAlertStyleWarning;
+            
+            
+            [alert addButtonWithTitle:@"确定"];
+            [alert addButtonWithTitle:@"不再提示"];
+            
+            [alert beginSheetModalForWindow:self.view.window completionHandler:^(NSModalResponse returnCode) {
+                if (returnCode == 1000) {
+                    
+                } else if (returnCode == 1001) {
+                    [defalut setBool:true forKey:cc];
+                    [defalut synchronize];
+                }
+            }];
+        }
+    }];
 }
 
 
