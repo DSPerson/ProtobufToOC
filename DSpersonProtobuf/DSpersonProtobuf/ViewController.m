@@ -7,17 +7,19 @@
 //
 
 #import "ViewController.h"
-
+#import "SelectPopover.h"
 #import "OpenView.h"
 #import "DSConst.m"
 #import "UserDefault.h"
-
 @interface ViewController ()
-
+@property (nonatomic, strong) SelectPopover *popver;
 //@property (nonatomic, strong) STPrivilegedTask *taskS;
 @end
 
 @implementation ViewController
+
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     _selectIndex = @"objc";
@@ -260,20 +262,6 @@
 
 - (void)createShell:(NSString *)filePath {
     
-    NSMutableString *string = [NSMutableString string];
-    ///在界面上创建一个新的文件夹
-    NSError *error;
-    NSString *needDirectory = [NSHomeDirectory() stringByAppendingPathComponent:@"Desktop/Proto_OBJC"];
-    [[NSFileManager defaultManager] removeItemAtPath:needDirectory error:nil];
-    [[NSFileManager defaultManager] createDirectoryAtPath:needDirectory withIntermediateDirectories:false attributes:nil error:&error];
-    if (error) {
-        NSLog(@"%@", error);
-    }
-    [string appendFormat:@"#!/bin/bash"];
-    [string appendFormat:@"\n"];
-    [string appendFormat:@"%@ --proto_path=%@ --%@_out=%@",@"/usr/local/bin/protoc", filePath, _selectIndex, needDirectory];
-    //     [string appendFormat:@" --version"];
-    
     //获取文件夹里面内容
     NSArray *arr = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:filePath error:nil];
     if (arr.count == 0) {
@@ -293,12 +281,37 @@
         }];
         return;
     }
+    
+    _popver = [[SelectPopover alloc] initWithFiles:names];
+    [_popver showRelativeToRect:self.view.bounds ofView:self.view preferredEdge:NSRectEdgeMinX];
+    [_popver becomeFirstResponder];
+    __weak ViewController *weakSelf = self;
+    _popver.action = ^{
+        [weakSelf rs:weakSelf.popver.files filePath:filePath];
+        [weakSelf.popver close];
+    };
+    
+}
+- (void)rs:(NSMutableArray *)names filePath:(NSString *)filePath {
+    NSMutableString *string = [NSMutableString string];
+    ///在界面上创建一个新的文件夹
+    NSError *error;
+    NSString *needDirectory = [NSHomeDirectory() stringByAppendingPathComponent:@"Desktop/Proto_OBJC"];
+    [[NSFileManager defaultManager] removeItemAtPath:needDirectory error:nil];
+    [[NSFileManager defaultManager] createDirectoryAtPath:needDirectory withIntermediateDirectories:false attributes:nil error:&error];
+    if (error) {
+        NSLog(@"%@", error);
+    }
+    [string appendFormat:@"#!/bin/bash"];
+    [string appendFormat:@"\n"];
+    [string appendFormat:@"%@ --proto_path=%@ --%@_out=%@",@"/usr/local/bin/protoc", filePath, _selectIndex, needDirectory];
+    
     [names enumerateObjectsUsingBlock:^(NSString *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [string appendFormat:@" %@/%@",filePath, obj];
     }];
     [string appendFormat:@"\n"];
     [string appendFormat:@"exit 0"];
-
+    
     __weak ViewController *weakSelf = self;
     [self install:@[@"-c",
                     string] blocl:^(NSString *rs2) {
@@ -342,7 +355,6 @@
         }
     }];
 }
-
 
 - (void)setRepresentedObject:(id)representedObject {
     [super setRepresentedObject:representedObject];

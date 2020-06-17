@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15705" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15705"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner"/>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="c22-O7-iKe" customClass="SelectRowView">
+            <rect key="frame" x="0.0" y="0.0" width="480" height="75"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ftN-bN-ePE">
+                    <rect key="frame" x="18" y="29" width="22" height="18"/>
+                    <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="XIb-cf-mmU">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="switchButtonAction:" target="c22-O7-iKe" id="LnK-CF-JAM"/>
+                    </connections>
+                </button>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jgR-bW-9SM">
+                    <rect key="frame" x="46" y="32" width="37" height="16"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="Kfg-uY-Kzd">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+            </subviews>
+            <constraints>
+                <constraint firstItem="ftN-bN-ePE" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="20" id="AdJ-pg-xz7"/>
+                <constraint firstItem="jgR-bW-9SM" firstAttribute="leading" secondItem="ftN-bN-ePE" secondAttribute="trailing" constant="10" id="L4O-Bb-3dO"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="jgR-bW-9SM" secondAttribute="trailing" constant="20" id="QEP-5P-kNo"/>
+                <constraint firstItem="jgR-bW-9SM" firstAttribute="centerY" secondItem="ftN-bN-ePE" secondAttribute="centerY" constant="-2" id="igN-LH-JF6"/>
+                <constraint firstItem="ftN-bN-ePE" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="nKP-Kq-thk"/>
+            </constraints>
+            <connections>
+                <outlet property="fileLabel" destination="jgR-bW-9SM" id="j7g-eG-x3b"/>
+                <outlet property="switchButton" destination="ftN-bN-ePE" id="2gf-1x-7mc"/>
+            </connections>
+            <point key="canvasLocation" x="140" y="106.5"/>
+        </customView>
+    </objects>
+</document>

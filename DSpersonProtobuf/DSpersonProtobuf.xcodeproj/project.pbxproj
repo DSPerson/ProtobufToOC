@@ -14,6 +14,11 @@
 		2113F72923617A74003C7DF7 /* capti.png in Resources */ = {isa = PBXBuildFile; fileRef = 2113F72823617A74003C7DF7 /* capti.png */; };
 		2113F72D23619D56003C7DF7 /* UserDefault.m in Sources */ = {isa = PBXBuildFile; fileRef = 2113F72C23619D56003C7DF7 /* UserDefault.m */; };
 		2113F72E23619D58003C7DF7 /* UserDefault.m in Sources */ = {isa = PBXBuildFile; fileRef = 2113F72C23619D56003C7DF7 /* UserDefault.m */; };
+		21158AD42498BC9200670C5C /* SelectPopover.m in Sources */ = {isa = PBXBuildFile; fileRef = 21158AD32498BC9200670C5C /* SelectPopover.m */; };
+		21158AD82498BDE200670C5C /* SelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21158AD62498BDE200670C5C /* SelectViewController.m */; };
+		21158AD92498BDE200670C5C /* SelectViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 21158AD72498BDE200670C5C /* SelectViewController.xib */; };
+		21158AE32498C2D100670C5C /* SelectRowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 21158AE22498C2D100670C5C /* SelectRowView.m */; };
+		21158AE52498C2DD00670C5C /* SelectRowView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 21158AE42498C2DD00670C5C /* SelectRowView.xib */; };
 		218834FB246BF0C6008C0D08 /* installProtobuf.sh in Resources */ = {isa = PBXBuildFile; fileRef = 218834FA246BF0C6008C0D08 /* installProtobuf.sh */; };
 		21A842D2215A4FE400C6E2C2 /* DefaultWC.m in Sources */ = {isa = PBXBuildFile; fileRef = 21A842D1215A4FE400C6E2C2 /* DefaultWC.m */; };
 		21A842DA215B571F00C6E2C2 /* DSConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 21A842D9215B571F00C6E2C2 /* DSConst.m */; };
@@ -61,6 +66,14 @@
 		2113F72823617A74003C7DF7 /* capti.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = capti.png; sourceTree = "<group>"; };
 		2113F72B23619D56003C7DF7 /* UserDefault.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserDefault.h; sourceTree = "<group>"; };
 		2113F72C23619D56003C7DF7 /* UserDefault.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserDefault.m; sourceTree = "<group>"; };
+		21158AD22498BC9200670C5C /* SelectPopover.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SelectPopover.h; sourceTree = "<group>"; };
+		21158AD32498BC9200670C5C /* SelectPopover.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SelectPopover.m; sourceTree = "<group>"; };
+		21158AD52498BDE200670C5C /* SelectViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SelectViewController.h; sourceTree = "<group>"; };
+		21158AD62498BDE200670C5C /* SelectViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SelectViewController.m; sourceTree = "<group>"; };
+		21158AD72498BDE200670C5C /* SelectViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectViewController.xib; sourceTree = "<group>"; };
+		21158AE12498C2D100670C5C /* SelectRowView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SelectRowView.h; sourceTree = "<group>"; };
+		21158AE22498C2D100670C5C /* SelectRowView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SelectRowView.m; sourceTree = "<group>"; };
+		21158AE42498C2DD00670C5C /* SelectRowView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectRowView.xib; sourceTree = "<group>"; };
 		218834FA246BF0C6008C0D08 /* installProtobuf.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = installProtobuf.sh; sourceTree = "<group>"; };
 		21A842D0215A4FE400C6E2C2 /* DefaultWC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DefaultWC.h; sourceTree = "<group>"; };
 		21A842D1215A4FE400C6E2C2 /* DefaultWC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DefaultWC.m; sourceTree = "<group>"; };
@@ -140,6 +153,14 @@
 				CF3B07C221464B8600A2BA3C /* AppDelegate.m */,
 				CF3B07C421464B8600A2BA3C /* ViewController.h */,
 				CF3B07C521464B8600A2BA3C /* ViewController.m */,
+				21158AD22498BC9200670C5C /* SelectPopover.h */,
+				21158AD32498BC9200670C5C /* SelectPopover.m */,
+				21158AD52498BDE200670C5C /* SelectViewController.h */,
+				21158AD62498BDE200670C5C /* SelectViewController.m */,
+				21158AD72498BDE200670C5C /* SelectViewController.xib */,
+				21158AE12498C2D100670C5C /* SelectRowView.h */,
+				21158AE22498C2D100670C5C /* SelectRowView.m */,
+				21158AE42498C2DD00670C5C /* SelectRowView.xib */,
 				CF292F6A21466B1B00CD1C78 /* OpenView.h */,
 				CF292F6B21466B1B00CD1C78 /* OpenView.m */,
 				21A842D0215A4FE400C6E2C2 /* DefaultWC.h */,
@@ -251,9 +272,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				CF3B07C821464B8800A2BA3C /* Assets.xcassets in Resources */,
+				21158AD92498BDE200670C5C /* SelectViewController.xib in Resources */,
 				21D20FA9246CDB2400BD7648 /* Localizable.strings in Resources */,
 				218834FB246BF0C6008C0D08 /* installProtobuf.sh in Resources */,
 				210329C9214B920600280DF8 /* cc.sh in Resources */,
+				21158AE52498C2DD00670C5C /* SelectRowView.xib in Resources */,
 				210329D3214BAAE000280DF8 /* brewc.sh in Resources */,
 				CF3B07CB21464B8800A2BA3C /* Main.storyboard in Resources */,
 			);
@@ -275,13 +298,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				21158AD82498BDE200670C5C /* SelectViewController.m in Sources */,
 				CF3B07C621464B8600A2BA3C /* ViewController.m in Sources */,
 				21A842D2215A4FE400C6E2C2 /* DefaultWC.m in Sources */,
 				CF3B07CE21464B8800A2BA3C /* main.m in Sources */,
 				2113F72D23619D56003C7DF7 /* UserDefault.m in Sources */,
 				CF3B07C321464B8600A2BA3C /* AppDelegate.m in Sources */,
+				21158AD42498BC9200670C5C /* SelectPopover.m in Sources */,
 				CF292F6C21466B1B00CD1C78 /* OpenView.m in Sources */,
 				21A842DA215B571F00C6E2C2 /* DSConst.m in Sources */,
+				21158AE32498C2D100670C5C /* SelectRowView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
