@@ -323,7 +323,7 @@
             
             NSTask *task = [[NSTask alloc] init];
             task.launchPath = @"/bin/bash";
-            task.arguments = @[@"-c", @"cd ~/Desktop; open Proto_OBJC"];
+            task.arguments = @[@"-c", @"cd ~/Desktop;", @"open Proto_OBJC"];
             task.currentDirectoryPath = [[NSBundle mainBundle] resourcePath];
             
             [task launch];
