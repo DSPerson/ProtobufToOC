@@ -11,7 +11,9 @@
 @interface SelectViewController () <NSTableViewDelegate, NSTableViewDataSource>
 
 @property (weak) IBOutlet NSTableView *tableView;
-
+@property (weak) IBOutlet NSPopUpButton *selectButton;
+@property (weak) IBOutlet NSMenu *selectButtonMenu;
+@property (nonatomic, strong) NSMutableArray <NSString *>* originFiles;
 @property (strong, nonatomic) NSMutableDictionary *dics;
 @end
 
@@ -22,11 +24,13 @@
     // Do view setup here.
     [_tableView registerNib:[[NSNib alloc] initWithNibNamed:@"SelectRowView" bundle:nil] forIdentifier:@"SelectRowView"];
     _tableView.headerView.hidden = true;
+    _originFiles = [_files mutableCopy];
     _tableView.tableColumns.firstObject.hidden = true;
     self.dics = [NSMutableDictionary dictionaryWithCapacity:_files.count];
     [_files enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [self.dics setValue:@(true) forKey:obj];
     }];
+   
 }
 
 
@@ -42,7 +46,6 @@
     BOOL s = [_dics[v] boolValue];
     r.switchButton.state = s;
     r.fileLabel.stringValue = v;
-    NSLog(@"%@", v);
     __weak SelectViewController *weakSelf = self;
     r.block = ^(BOOL s) {
         weakSelf.dics[v] = @(s);
@@ -61,5 +64,76 @@
     }];
     !_action ?: _action();
 }
+- (IBAction)selectButtonAction:(NSPopUpButton *)sender {
+    switch (sender.indexOfSelectedItem) {
+        case 0:
+        {
+            [_files enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                [self.dics setValue:@(true) forKey:obj];
+            }];
+        }
+            break;
+        case 1:
+        {
+            [_files enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                [self.dics setValue:@(false) forKey:obj];
+            }];
+        }
+            break;
+        case 2:
+        {
+            [_files enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                [self.dics setValue:@(![self.dics[obj] boolValue]) forKey:obj];
+            }];
+        }
+            break;
+        default:
+            break;
+    }
+    //    int i = 0;
+    //    BOOL ss = !i;
+    [self.tableView reloadData];
+}
+- (IBAction)sortButtonAction:(NSPopUpButton *)sender {
+    switch (sender.indexOfSelectedItem) {
+        case 0:
+        {
+            _files = [_originFiles mutableCopy];
+        }
+            break;
+        case 1:
+        {
+            
+            NSStringCompareOptions comparisonOptions = NSNumericSearch;
+            NSLocale *currentLocale = [NSLocale currentLocale];
+            NSComparator finderSortBlock = ^(id string1,id string2) {
+                
+                NSRange string1Range = NSMakeRange(0, [string1 length]);
+                return [string1 compare:string2 options:comparisonOptions range:string1Range locale:currentLocale];
+            };
+            NSArray *finderSortArray = [_files sortedArrayUsingComparator:finderSortBlock];
+            _files = [finderSortArray mutableCopy];
+          
+        }
+            break;
+        case 2:
+        {
+            NSStringCompareOptions comparisonOptions = NSNumericSearch;
+            NSLocale *currentLocale = [NSLocale currentLocale];
+            NSComparator finderSortBlock = ^(id string1,id string2) {
+                
+                NSRange string1Range = NSMakeRange(0, [string2 length]);
+                return [string2 compare:string1 options:comparisonOptions range:string1Range locale:currentLocale];
+            };
+            NSArray *finderSortArray = [_files sortedArrayUsingComparator:finderSortBlock];
+            _files = [finderSortArray mutableCopy];
+        }
+            break;
+        default:
+            break;
+    }
+    [self.tableView reloadData];
+}
+
 
 @end

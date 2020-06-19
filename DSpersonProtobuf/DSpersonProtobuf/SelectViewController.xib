@@ -8,6 +8,8 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="SelectViewController">
             <connections>
+                <outlet property="selectButton" destination="9kt-vE-7qN" id="aL0-Xe-eEz"/>
+                <outlet property="selectButtonMenu" destination="DY9-lZ-pGN" id="y3J-Yw-37g"/>
                 <outlet property="tableView" destination="6Pc-Zf-pdz" id="bA8-Eo-IbJ"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
             </connections>
@@ -33,7 +35,7 @@
                                 <tableColumns>
                                     <tableColumn width="116" minWidth="40" maxWidth="1000" hidden="YES" id="TeK-uf-cRc">
                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
-                                            <font key="font" metaFont="controlContent" size="11"/>
+                                            <font key="font" metaFont="label" size="11"/>
                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                         </tableHeaderCell>
@@ -83,7 +85,7 @@
                     </scroller>
                 </scrollView>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8H7-ve-Ql7">
-                    <rect key="frame" x="207" y="-2" width="67" height="32"/>
+                    <rect key="frame" x="212" y="-2" width="67" height="32"/>
                     <buttonCell key="cell" type="push" title="完成" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="Cyg-bb-2mx">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -92,13 +94,51 @@
                         <action selector="okButton:" target="-2" id="JXV-Sz-8QG"/>
                     </connections>
                 </button>
+                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9kt-vE-7qN">
+                    <rect key="frame" x="13" y="2" width="78" height="25"/>
+                    <popUpButtonCell key="cell" type="push" title="全选" bezelStyle="rounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" inset="2" preferredEdge="maxX" selectedItem="WrF-FR-gsG" id="ZvG-lI-8zk">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                        <menu key="menu" id="DY9-lZ-pGN">
+                            <items>
+                                <menuItem title="全选" state="on" id="WrF-FR-gsG"/>
+                                <menuItem title="全不选" id="yPV-9k-2vi"/>
+                                <menuItem title="反向" id="Xkx-mj-lSw"/>
+                            </items>
+                        </menu>
+                    </popUpButtonCell>
+                    <connections>
+                        <action selector="selectButtonAction:" target="-2" id="uTD-aI-Ujp"/>
+                    </connections>
+                </popUpButton>
+                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yeE-V4-Xtp">
+                    <rect key="frame" x="101" y="2" width="78" height="25"/>
+                    <popUpButtonCell key="cell" type="push" title="原文件" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="gff-8S-d1J" id="D5S-YS-bn1">
+                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                        <menu key="menu" id="aX7-lY-cxA">
+                            <items>
+                                <menuItem title="原文件" id="gff-8S-d1J"/>
+                                <menuItem title="升序" state="on" id="I8R-j2-dol"/>
+                                <menuItem title="降序" id="SKx-nc-2yM"/>
+                            </items>
+                        </menu>
+                    </popUpButtonCell>
+                    <connections>
+                        <action selector="sortButtonAction:" target="-2" id="hdw-de-oWI"/>
+                    </connections>
+                </popUpButton>
             </subviews>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="FSH-u4-S7K" secondAttribute="trailing" id="Qvu-RE-BHY"/>
+                <constraint firstItem="9kt-vE-7qN" firstAttribute="bottom" secondItem="8H7-ve-Ql7" secondAttribute="bottom" id="R2l-uF-fKR"/>
+                <constraint firstItem="9kt-vE-7qN" firstAttribute="bottom" secondItem="yeE-V4-Xtp" secondAttribute="bottom" id="WD8-y3-Aua"/>
                 <constraint firstAttribute="bottom" secondItem="FSH-u4-S7K" secondAttribute="bottom" constant="30" id="XJb-kV-ZwK"/>
+                <constraint firstItem="9kt-vE-7qN" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="15" id="XvE-A1-Vwl"/>
+                <constraint firstItem="yeE-V4-Xtp" firstAttribute="leading" secondItem="9kt-vE-7qN" secondAttribute="trailing" constant="15" id="bJt-fw-Ke5"/>
                 <constraint firstAttribute="bottom" secondItem="8H7-ve-Ql7" secondAttribute="bottom" constant="5" id="dpu-OE-aMe"/>
                 <constraint firstItem="FSH-u4-S7K" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="gKj-7q-Bke"/>
-                <constraint firstItem="8H7-ve-Ql7" firstAttribute="centerX" secondItem="Hz6-mo-xeY" secondAttribute="centerX" id="lRr-W2-g5x"/>
+                <constraint firstItem="8H7-ve-Ql7" firstAttribute="centerX" secondItem="Hz6-mo-xeY" secondAttribute="centerX" constant="5" id="lRr-W2-g5x"/>
                 <constraint firstItem="FSH-u4-S7K" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="nGO-by-Agv"/>
             </constraints>
             <point key="canvasLocation" x="-31" y="127.5"/>

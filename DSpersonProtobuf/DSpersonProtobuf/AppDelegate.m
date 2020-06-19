@@ -12,6 +12,8 @@
 @interface AppDelegate () <NSMenuDelegate>
 
 @property (weak) IBOutlet NSMenu *openRecentMenu;
+
+@property (nonatomic, strong) NSMutableDictionary *dic;
 @end
 
 @implementation AppDelegate
@@ -35,6 +37,7 @@
     // Insert code here to initialize your application
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateOpenRecent) name:kUpdateRecentListNotificationName object:nil];
     [self updateOpenRecent];
+
     
 }
 - (void)application:(NSApplication *)application openURLs:(NSArray<NSURL *> *)urls {
